@@ -54,17 +54,22 @@ def barclayHedgeIndex(fileLoc):
     df = pd.DataFrame(list(zip(tmpMonth,tmpReturn)), columns=["Date", "barclayReturn"])
     return df
 
-def getMonthlyReturns(fundAuM):
+def getMonthlyReturns(input, outCols = None):
     """
     Returns a dataframe containing monthly returns of the fund.
 
     Args:
-        fundAuM: pd.Dataframe: A dataframe containing AuM of the fund at the end 
-            of each day. SHould contain columns named ["Date", "AuM"]
+        input: pd.Dataframe: A dataframe containing AuM of the fund at the end 
+            of each day. Should contain columns named ["Date", "Value"]
+        outCols: list: A list of strings, containing the output dataframe's 
+            column names (Optional).
     """
-    endDate = fundAuM.iloc[-1].Date 
-    startMonth = fundAuM.iloc[0].Date.month
-    startYear = fundAuM.iloc[0].Date.year
+    input = input.sort_values(["Date"], ascending = True)
+
+    cols = input.columns
+    endDate = input.iloc[-1][cols[0]] 
+    startMonth = input.iloc[0][cols[0]].month
+    startYear = input.iloc[0][cols[0]].year
 
     rangeStart = datetime.datetime(year = startYear, month=startMonth, day=1)
     rangeEnd = rangeStart
@@ -75,18 +80,23 @@ def getMonthlyReturns(fundAuM):
         rangeEnd += relativedelta(months=1)
 
         # Get the dataframe for each month
-        tmpDataframe = fundAuM[(rangeStart <= fundAuM.Date)&(fundAuM.Date < rangeEnd)]
+        tmpDataframe = input[(rangeStart <= input[cols[0]])&(input[cols[0]] < rangeEnd)]
 
         # Calculate the return
-        monthReturn.append((tmpDataframe.iloc[-1].AuM-tmpDataframe.iloc[0].AuM)/tmpDataframe.iloc[0].AuM)
+
+        monthReturn.append((tmpDataframe.iloc[-1][cols[1]]-tmpDataframe.iloc[0][cols[1]])/tmpDataframe.iloc[0][cols[1]])
         monthStart.append(rangeStart)
         monthEnd.append(rangeStart + relativedelta(months=1))
+
+        # if str(rangeStart) == "2021-04-01 00:00:00":
+        #     print(tmpDataframe)
+        #     print(rangeStart, rangeStart + relativedelta(months=1), tmpDataframe.iloc[-1][cols[1]],tmpDataframe.iloc[0][cols[1]], (tmpDataframe.iloc[-1][cols[1]]-tmpDataframe.iloc[0][cols[1]])/tmpDataframe.iloc[0][cols[1]])
 
         if endDate <= rangeEnd:
             break
         rangeStart += relativedelta(months=1)
 
-    fundMonthlyReturns = pd.DataFrame(list(zip(monthEnd,monthReturn)), columns=["Date", "fundReturn"])
+    fundMonthlyReturns = pd.DataFrame(list(zip(monthEnd,monthReturn)), columns=["Date", "fundReturn"] if outCols == None else outCols)
     return fundMonthlyReturns
 
 def calcCum(returns):
@@ -156,7 +166,7 @@ def calcCaptureRate(df):
     numerator = (df.iloc[:,0]+1).product(axis = 0)
     denumerator = (df.iloc[:,1]+1).product(axis = 0)
     
-    return (numerator - 1) / (denumerator - 1)
+    return (numerator - 1) / (denumerator - 1) if denumerator != 1 else 0
 
 def netGrowthRate(AuMLastDay, AuMFirstDay, annualized):
     """
@@ -173,3 +183,53 @@ def netGrowthRate(AuMLastDay, AuMFirstDay, annualized):
         return np.power((AuMLastDay-AuMFirstDay)/AuMFirstDay + 1, 1/3) - 1
     else:
         return (AuMLastDay-AuMFirstDay)/AuMFirstDay
+    
+
+def loadRiskFreeReturn(path):
+    """
+    Loads the risk-free return rate
+
+    Args:
+        path: str: the path for a csv file
+    
+    Returns:
+        A pandas dataframe
+    """
+    df = pd.read_csv(path)
+    df = df[["Date", "Price"]]
+    df["Date"] = pd.to_datetime(df["Date"], dayfirst = True, format = "%m/%d/%Y")
+    return df
+
+
+def calcJensenAlpha(ri, rm, rf, beta):
+    """
+    Calculate's Jensen's alpha
+
+    Args:
+        ri: float: the realized return of the portfolio or investment
+        rm: float: the realized return of the appropriate market index
+        rf: float: the risk-free rate of return for the time period
+        beta: float: the beta of the portfolio of investment with respect to the chosen market index
+
+    Returns: A float number
+    """
+    return ri - (rf+beta*(rm-rf))
+
+
+def calc_beta(dfFund, dfBenchmark):
+    """
+    Calculates beta of an asset with respect to a benchmark.
+
+    Args:
+        dfFund, dfBenchmark: pd.Series: Two series of pandas data 
+        representing the fund and the benchmark's returns.
+    
+    Returns: 
+        A float number representing the beta
+    """
+    
+    m = dfBenchmark # market returns are column zero from numpy array
+    s = dfFund # stock returns are column one from numpy array
+    covariance = np.cov(s,m) # Calculate covariance between stock and market
+    beta = covariance[0,1]/covariance[1,1]
+    return beta
