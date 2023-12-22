@@ -168,7 +168,7 @@ def calcCaptureRate(df):
     
     return (numerator - 1) / (denumerator - 1) if denumerator != 1 else 0
 
-def netGrowthRate(AuMLastDay, AuMFirstDay, annualized):
+def netGrowthRate(AuMLastDay, AuMFirstDay):
     """
     Returns the net growth rate of the fund's AuM 
     The formula: (Last day value - First day value)/First day value = growth rate
@@ -179,11 +179,66 @@ def netGrowthRate(AuMLastDay, AuMFirstDay, annualized):
     Returns: 
         float.
     """
-    if annualized:
-        return np.power((AuMLastDay-AuMFirstDay)/AuMFirstDay + 1, 1/3) - 1
-    else:
-        return (AuMLastDay-AuMFirstDay)/AuMFirstDay
+    return (AuMLastDay-AuMFirstDay)/AuMFirstDay
+
+def getRollingGrowth(dfReturn, interval):
+    """
+    Gets the rolling growth rate of the dfReturn using netGrowthRate function
+
+    Args:
+        dfReturn: pd.Dataframe: The index should be date and the first columns the property you want to get
+        interval: timedelta: The interval for the rolling calculation, use days, months or years as an argument
     
+    Returns:
+        A dataframe containing the rolling results in percentage
+    """
+    
+    outDf = dfReturn.rolling(interval, min_periods = interval.days).apply(lambda x: netGrowthRate(x.iloc[-1], x.iloc[0]))
+
+    # Get percentage returns
+    outDf.iloc[:,0] = outDf.iloc[:,0] * 100
+
+    return outDf
+
+def plotMainAndSubPlot(main, sub, titles, eqAxisRange):
+    """
+    Plots the main chart with separate subplots below it
+
+    Args:
+        main: pd.Dataframe: A dataframe to plot as the main chart. indexes should be datetime
+        subs: list: a list of dataframes to be plotted on a subplot each. indexes should be
+             datetime 
+        titles: list: A list containing titles for each plot
+        eqAxisRange: bool: If true, all plots on the figure will have same axis range
+    """
+    # Get axis range
+    __xlim = (main.index.min(),main.index.max())
+    if eqAxisRange:
+        for df in sub:
+            if __xlim[1] < df.index.max(): __xlim[1] = df.index.max()
+            if df.index.min() < __xlim[0]: __xlim[0] = df.index.max()
+
+    plotCount = 1 + len(sub)
+
+    fig, ax = plt.subplots(plotCount, 1, gridspec_kw={'height_ratios': [3]+[1]*len(sub), 'hspace': .4})
+
+    # The main plot has a 6 inches height, the rest of the subplots have a 2 inches height
+    # Width of all charts are set to 10 inches
+    fig.set_size_inches(10, 2 * (2+plotCount))
+
+
+    # Plot the main chart
+    ax[0].plot(main)
+    ax[0].set_xlim(__xlim) if eqAxisRange else ax[0].set_xlim((main.index.min(),main.index.max()))
+    ax[0].axhline(0, color='black', linewidth = .5)
+    ax[0].set_title(titles[0])
+    # ax[0].figure.set_size_inches(10,15)
+
+    for i in range(len(sub)):
+        ax[i+1].plot(sub[i])
+        ax[i+1].set_xlim(__xlim) if eqAxisRange else ax[i+1].set_xlim((sub[i].index.min(),sub[i].index.max()))
+        ax[i|+1].axhline(0, color='black', linewidth = .5)
+        ax[i+1].set_title(titles[i+1])
 
 def loadRiskFreeReturn(path):
     """
@@ -203,7 +258,7 @@ def loadRiskFreeReturn(path):
 
 def calcJensenAlpha(ri, rm, rf, beta):
     """
-    Calculate's Jensen's alpha
+    Calculates Jensen's alpha
 
     Args:
         ri: float: the realized return of the portfolio or investment
@@ -215,6 +270,32 @@ def calcJensenAlpha(ri, rm, rf, beta):
     """
     return ri - (rf+beta*(rm-rf))
 
+def calcTreynorRatio(rp, rf, beta):
+    """
+    Calculates Jensen's alpha
+
+    Args:
+        rp: float: The portfolio return
+        rf: float: the risk-free rate of return for the time period
+        beta: float: the beta of the portfolio of investment with respect to the chosen market index
+
+    Returns: A float number
+    """
+    return (rp-rf)/beta
+
+def calcSortinoRatio(rp, rf, nr):
+    """
+    Calculates Sortino ratio
+    Ref: https://www.wallstreetprep.com/knowledge/sortino-ratio/
+
+    Args:
+        rp: float: The portfolio return
+        rf: float: the risk-free rate of return for the time period
+        nr: pd.Series: A dataframe containing the negative returns
+
+    Returns: A float number
+    """
+    return (rp-rf)/np.std(nr,axis = 0)
 
 def calc_beta(dfFund, dfBenchmark):
     """
