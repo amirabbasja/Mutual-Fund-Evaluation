@@ -88,10 +88,6 @@ def getMonthlyReturns(input, outCols = None):
         monthStart.append(rangeStart)
         monthEnd.append(rangeStart + relativedelta(months=1))
 
-        # if str(rangeStart) == "2021-04-01 00:00:00":
-        #     print(tmpDataframe)
-        #     print(rangeStart, rangeStart + relativedelta(months=1), tmpDataframe.iloc[-1][cols[1]],tmpDataframe.iloc[0][cols[1]], (tmpDataframe.iloc[-1][cols[1]]-tmpDataframe.iloc[0][cols[1]])/tmpDataframe.iloc[0][cols[1]])
-
         if endDate <= rangeEnd:
             break
         rangeStart += relativedelta(months=1)
@@ -154,20 +150,6 @@ def calcCumReturnInRange(df, interval, count):
 
     return outDf
 
-def calcCaptureRate(df):
-    """
-    Calculates the capture rate of fund relative to benchmark.
-
-    Args: 
-        df: pd.Dataframe: A dataframe containing two columns. First the 
-            fund returns and the second, the benchmark returns.
-    """
-    numerator, denumerator = 1, 1
-    numerator = (df.iloc[:,0]+1).product(axis = 0)
-    denumerator = (df.iloc[:,1]+1).product(axis = 0)
-    
-    return (numerator - 1) / (denumerator - 1) if denumerator != 1 else 0
-
 def netGrowthRate(AuMLastDay, AuMFirstDay):
     """
     Returns the net growth rate of the fund's AuM 
@@ -206,8 +188,8 @@ def plotMainAndSubPlot(main, sub, titles, eqAxisRange):
 
     Args:
         main: pd.Dataframe: A dataframe to plot as the main chart. indexes should be datetime
-        subs: list: a list of dataframes to be plotted on a subplot each. indexes should be
-             datetime 
+        sub: list: a list of lists,  dataframes to be plotted on a subplot each. indexes should be
+             datetime. All the columns will be plotted on the same subplot
         titles: list: A list containing titles for each plot
         eqAxisRange: bool: If true, all plots on the figure will have same axis range
     """
@@ -235,10 +217,55 @@ def plotMainAndSubPlot(main, sub, titles, eqAxisRange):
     # ax[0].figure.set_size_inches(10,15)
 
     for i in range(len(sub)):
-        ax[i+1].plot(sub[i])
+        ax[i+1].plot(sub[i], label = list(sub[i].columns) if sub[i].shape[1]!=1 else list(sub[i].columns)[0])
         ax[i+1].set_xlim(__xlim) if eqAxisRange else ax[i+1].set_xlim((sub[i].index.min(),sub[i].index.max()))
-        ax[i|+1].axhline(0, color='black', linewidth = .5)
+        ax[i+1].axhline(0, color='black', linewidth = .5)
         ax[i+1].set_title(titles[i+1])
+        ax[i+1].legend(prop = { "size": 8 }, loc ="upper left")
+
+def calcCaptureRate(df:pd.DataFrame):
+    """
+    Calculates the capture rate of fund relative to benchmark.
+
+    Args: 
+        df: pd.Dataframe: A dataframe containing two columns. First the 
+            fund returns and the second, the benchmark returns.
+    """
+    
+    numerator, denumerator = 1, 1
+    numerator = (df.iloc[:,0]+1).product(axis = 0)
+    denumerator = (df.iloc[:,1]+1).product(axis = 0)
+    
+    return (numerator - 1) / (denumerator - 1) if denumerator != 1 else 0
+
+def calcRollingCaptureRate(df:pd.DataFrame, interval:datetime.timedelta):
+    """
+    Calculates the rolling capture ratio using calcCaptureRate
+
+    Args:
+        df: pd.Dataframe: A dataframe containing the fund return and benchmark return
+            fund and benchmark columns should be located at first and second column 
+            respectively.
+        interval: timedelta: The interval for the rolling calculation, use days, months
+             or years as an argument
+    
+    Returns:
+        A dataframe containing the rolling results
+    """
+    # Internal functions to get the days that benchmark was up or down respectively
+    def __upDays(x:pd.Series, _df:pd.DataFrame):
+        # Assuming benchmark is at the second column
+        _df = _df.loc[x.index]
+        return  _df[0<_df.Benchmark]
+    def __dnDays(x:pd.Series, _df:pd.DataFrame):
+        # Assuming benchmark is at the second column
+        _df = _df.loc[x.index]
+        return _df[_df.iloc[:,1]<0]
+
+    rollingUpCapture = df.rolling(interval, min_periods = interval.days).apply(lambda x: calcCaptureRate(__upDays(x, df)))
+    rollingDownCapture = df.rolling(interval, min_periods = interval.days).apply(lambda x: calcCaptureRate(__dnDays(x, df)))
+
+    return rollingUpCapture, rollingDownCapture
 
 def loadRiskFreeReturn(path):
     """
@@ -255,6 +282,22 @@ def loadRiskFreeReturn(path):
     df["Date"] = pd.to_datetime(df["Date"], dayfirst = True, format = "%m/%d/%Y")
     return df
 
+def loadBTCReturn(path):
+    """
+    Loads the risk-free return rate
+
+    Args:
+        path: str: the path for a csv file
+    
+    Returns:
+        A pandas dataframe
+    """
+    df = pd.read_csv(path)
+    df = df[["Date", "Price"]]
+    df["Date"] = pd.to_datetime(df["Date"], dayfirst = True, format = "%m/%d/%Y")
+    df.Price = df.Price.str.replace(",","").astype(float)
+    df = df.sort_values("Date", ascending=True, ignore_index=True)
+    return df
 
 def calcJensenAlpha(ri, rm, rf, beta):
     """
