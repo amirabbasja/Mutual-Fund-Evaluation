@@ -218,10 +218,19 @@ def plotMainAndSubPlot(main, sub, titles, eqAxisRange):
 
     for i in range(len(sub)):
         ax[i+1].plot(sub[i], label = list(sub[i].columns) if sub[i].shape[1]!=1 else list(sub[i].columns)[0])
+        ax[i+1].axhline(0, color='black', linewidth = .5) # Add the zero line (May not be seen)
+        ax[i+1].set_title(titles[i+1])# Add title
+        ax[i+1].legend(prop = { "size": 8 }, loc ="upper left") # Add legend
+
+        # Set the Y axis limit for each subplot
+        # The Y limit of each subplot is acquired by the min/max of the data it is plotting (Excluding the index)
+        # A 2% padding to top and bottom of the chart is added for better UX
+        subP_maxY =  sub[i].iloc[:,0:].max().max() * 1.02
+        subP_minY =  sub[i].iloc[:,0:].min().min() * 0.98
+        ax[i+1].set_ylim((subP_minY,subP_maxY)) 
+
+        # Set the X axis limit for each subplot. If eqAxisRange = False, matplotlib will determine the X limits.
         ax[i+1].set_xlim(__xlim) if eqAxisRange else ax[i+1].set_xlim((sub[i].index.min(),sub[i].index.max()))
-        ax[i+1].axhline(0, color='black', linewidth = .5)
-        ax[i+1].set_title(titles[i+1])
-        ax[i+1].legend(prop = { "size": 8 }, loc ="upper left")
 
 def calcCaptureRate(df:pd.DataFrame):
     """
@@ -266,6 +275,31 @@ def calcRollingCaptureRate(df:pd.DataFrame, interval:datetime.timedelta):
     rollingDownCapture = df.rolling(interval, min_periods = interval.days).apply(lambda x: calcCaptureRate(__dnDays(x, df)))
 
     return rollingUpCapture, rollingDownCapture
+
+def calcRollingWinRate(df: pd.DataFrame, interval:datetime.timedelta):
+    """
+    Win rate refers to the probability of a fund being purchased at any time and held for a
+    certain period of time before making a profit. For example, if a fund has been running
+    for a year and has made profits in 9 months, the investment success rate of the fund is
+    75%. This function calculates win ratio of dataframe df, in the required interval
+
+    Args:
+        df: pd.Dataframe: A dataframe containing the fund return on the first column
+        interval: timedelta: The interval for the rolling calculation, use days, months
+             or years as an argument
+    
+    Returns:
+        A dataframe containing the rolling win rate for the end of specified date
+    """
+    def __internalFcn(__x):
+        """
+        Calculates win rate
+        """
+        __tmp = __x[0<__x].shape[0]/__x.shape[0]
+        return __tmp
+
+    dfOut = df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x))
+    return dfOut
 
 def loadRiskFreeReturn(path):
     """
@@ -325,6 +359,41 @@ def calcTreynorRatio(rp, rf, beta):
     Returns: A float number
     """
     return (rp-rf)/beta
+
+def rollingJensenAlpha(df: pd.DataFrame, interval:datetime.timedelta):
+    """
+    Calculates the rolling Jensen's ratio for the passed dataframe df
+
+    Args:
+        df: pd.Dataframe: A dataframe containing the fund return, benchmark return
+            and the risk free return. Fund, benchmark and risk free columns should 
+            be located at first, second and third columns respectively.
+        interval: timedelta: The interval for the rolling calculation, use days, months
+             or years as an argument
+    
+    Returns:
+        A dataframe containing the rolling results
+    """
+    def __internalFcn(x:pd.Series, df:pd.DataFrame):
+        df = df.loc[x.index]
+        beta = calc_beta(df.iloc[:,0], df.iloc[:,1])
+
+        # Vectorized calculation
+        rf = (df.iloc[:,2]+1).prod() # Risk free return of interval
+        rm = (df.iloc[:,1]+1).prod() # Market benchmark return
+        ri = (df.iloc[:,0]+1).prod() # Fund return 
+
+        # Calculate jensen's alpha
+        return calcJensenAlpha(ri, rm, rf, beta)
+    
+    # Calculate the rolling alpha
+    dfOut = df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x, df))
+
+    # All three columns are identical. Choose first column and change the its label
+    dfOut = pd.DataFrame(dfOut.iloc[:,0])
+    dfOut.columns = ["Jensen alpha"]
+
+    return dfOut # Change series to dataframe
 
 def calcSortinoRatio(rp, rf, nr):
     """
