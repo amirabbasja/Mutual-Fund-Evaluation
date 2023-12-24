@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import datetime
 from dateutil.relativedelta import relativedelta
 import calendar
+import quantstats as qs
 
 # Necessary methods
 def divideDateRange(rangeStart, rangeEnd, interval, count):
@@ -242,8 +243,8 @@ def calcCaptureRate(df:pd.DataFrame):
     """
     
     numerator, denumerator = 1, 1
-    numerator = (df.iloc[:,0]+1).product(axis = 0)
-    denumerator = (df.iloc[:,1]+1).product(axis = 0)
+    numerator = (df.iloc[:,0]+1).product(axis = 0) - 1 # cumulative 
+    denumerator = (df.iloc[:,1]+1).product(axis = 0) - 1 # cumulative
     
     return (numerator - 1) / (denumerator - 1) if denumerator != 1 else 0
 
@@ -259,7 +260,7 @@ def calcRollingCaptureRate(df:pd.DataFrame, interval:datetime.timedelta):
              or years as an argument
     
     Returns:
-        A dataframe containing the rolling results
+        Two dataframe containing up and down capture rates respectively
     """
     # Internal functions to get the days that benchmark was up or down respectively
     def __upDays(x:pd.Series, _df:pd.DataFrame):
@@ -347,18 +348,18 @@ def calcJensenAlpha(ri, rm, rf, beta):
     """
     return ri - (rf+beta*(rm-rf))
 
-def calcTreynorRatio(rp, rf, beta):
+def calcTreynorRatio(ri, rf, beta):
     """
     Calculates Jensen's alpha
 
     Args:
-        rp: float: The portfolio return
+        ri: float: The portfolio return
         rf: float: the risk-free rate of return for the time period
         beta: float: the beta of the portfolio of investment with respect to the chosen market index
 
     Returns: A float number
     """
-    return (rp-rf)/beta
+    return (ri-rf)/beta
 
 def rollingJensenAlpha(df: pd.DataFrame, interval:datetime.timedelta):
     """
@@ -379,9 +380,9 @@ def rollingJensenAlpha(df: pd.DataFrame, interval:datetime.timedelta):
         beta = calc_beta(df.iloc[:,0], df.iloc[:,1])
 
         # Vectorized calculation
-        rf = (df.iloc[:,2]+1).prod() # Risk free return of interval
-        rm = (df.iloc[:,1]+1).prod() # Market benchmark return
-        ri = (df.iloc[:,0]+1).prod() # Fund return 
+        rf = (df.iloc[:,2]+1).prod() - 1 # cumulative Risk free return of interval
+        rm = (df.iloc[:,1]+1).prod() - 1 # cumulative Market benchmark return
+        ri = (df.iloc[:,0]+1).prod() - 1 # cumulative Fund return 
 
         # Calculate jensen's alpha
         return calcJensenAlpha(ri, rm, rf, beta)
@@ -394,6 +395,31 @@ def rollingJensenAlpha(df: pd.DataFrame, interval:datetime.timedelta):
     dfOut.columns = ["Jensen alpha"]
 
     return dfOut # Change series to dataframe
+
+def calcRollingCalmarRatio(df:pd.DataFrame, interval:datetime.timedelta):
+    """
+    Calculates the rolling Calmar ratio for the passed dataframe df
+
+    Args:
+        df: pd.Dataframe: A dataframe containing the fund return located at the first 
+            column
+        interval: timedelta: The interval for the rolling calculation, use days, months
+             or years as an argument
+    
+    Returns:
+        A dataframe containing the rolling results
+    """
+    def __internalFcn(x:pd.Series, _df:pd.DataFrame):
+        _df = _df.loc[x.index]
+        
+        # Get calmar for chosen df
+        return qs.stats.calmar(pd.DataFrame(_df))
+    
+    # Calculate the rolling calmar
+    dfOut = df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x, df))
+    dfOut.columns = ["calmar"]
+
+    return pd.DataFrame(dfOut)
 
 def calcSortinoRatio(rp, rf, nr):
     """
@@ -426,3 +452,31 @@ def calc_beta(dfFund, dfBenchmark):
     covariance = np.cov(s,m) # Calculate covariance between stock and market
     beta = covariance[0,1]/covariance[1,1]
     return beta
+
+def calcRollingInformationRatio(df:pd.DataFrame, interval:datetime.timedelta):
+    """
+    Calculates the rolling Information ratio for the passed dataframe df
+
+    Args:
+        df: pd.Dataframe: A dataframe containing the fund return and benchmark returns 
+            located at first and second columns
+        interval: timedelta: The interval for the rolling calculation, use days, months
+             or years as an argument
+    
+    Returns:
+        A dataframe containing the rolling results
+    """
+    def __internalFcn(x:pd.Series, _df:pd.DataFrame):
+        _df = _df.loc[x.index]
+        ri = _df.iloc[:,0] # Benchmark return
+        rm = _df.iloc[:,1] # Portfolio return
+
+        diff = ri - rm
+
+        return diff.mean()/diff.std()
+    
+    # Calculate the rolling Information
+    dfOut = df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x, df)).iloc[:,0]
+    dfOut.columns = ["Information"]
+
+    return pd.DataFrame(dfOut)
