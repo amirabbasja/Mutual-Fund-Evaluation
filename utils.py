@@ -511,3 +511,37 @@ def calcRollingTreynorRatio(df:pd.DataFrame, interval:datetime.timedelta):
     dfOut.columns = ["treynor"]
 
     return pd.DataFrame(dfOut)
+
+def calcRollingSTD(df: pd.DataFrame, interval:datetime.timedelta):
+    """
+    Calculates the rolling standard deviation of the returns. Only one
+    column for portfolio's daily return is needed.
+    """
+    dfOut = df.rolling(interval, interval.days).apply(lambda x: x.std())
+    dfOut.columns = ["Standard deviation"]
+    return dfOut
+
+def calcRollingDownsideDeviation(df: pd.DataFrame, interval:datetime.timedelta, MAR: float):
+    """
+    Calculates the downside deviation of the fund relative to a specific 
+    MAR (Minimum acceptable return). The dataframe should have one column 
+    which is the fund's return at a specific date.
+
+    Args:   
+        df: pd.Dataframe: The fund's returns
+        MAR: float: Minimum acceptable return (Not in percentages)
+    """
+
+    def __internalFcn(x:pd.Series, _df:pd.DataFrame):
+        _df = _df.loc[x.index]
+        _count = _df.shape[0]
+        _df = _df.iloc[:,0] - .03
+        _df = _df[_df<0]
+        _df=np.sqrt((_df**2).sum()/_count)
+        return _df
+    
+    # Calculate the Downside deviation
+    dfOut = pd.DataFrame(df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x, df)).iloc[:,0])
+    dfOut.columns = ["Downside Deviation"]
+    
+    return pd.DataFrame(dfOut)
