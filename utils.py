@@ -480,3 +480,34 @@ def calcRollingInformationRatio(df:pd.DataFrame, interval:datetime.timedelta):
     dfOut.columns = ["Information"]
 
     return pd.DataFrame(dfOut)
+
+def calcRollingTreynorRatio(df:pd.DataFrame, interval:datetime.timedelta):
+    """
+    Calculates the rolling Treynor ratio for the passed dataframe df
+
+    Args:
+        df: pd.Dataframe:  A dataframe containing the fund return, benchmark return
+            and the risk free return. Fund, benchmark and risk free columns should 
+            be located at first, second and third columns respectively.
+        interval: timedelta: The interval for the rolling calculation, use days, months
+             or years as an argument
+    
+    Returns:
+        A dataframe containing the rolling results
+    """
+    def __internalFcn(x:pd.Series, _df:pd.DataFrame):
+        _df = _df.loc[x.index]
+        beta = calc_beta(_df.iloc[:,0], _df.iloc[:,1])
+        
+        # Vectorized calculation
+        rf = (_df.iloc[:,2]+1).prod() - 1 # Risk free return of interval
+        rm = (_df.iloc[:,1]+1).prod() - 1 # Market benchmark return
+        ri = (_df.iloc[:,0]+1).prod() - 1 # Fund return 
+
+        return calcTreynorRatio(ri,rf,beta)
+    
+    # Calculate the rolling Treynor
+    dfOut = df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x, df)).iloc[:,0]
+    dfOut.columns = ["treynor"]
+
+    return pd.DataFrame(dfOut)
