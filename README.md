@@ -14,3 +14,8 @@ Metrics used in this repository:
 7. Sortino Ratio
 8. Sharpe Ratio
 9. Information Ratio
+10. Standard deviation of returns
+11. Downside deviation
+12. Max drawdown
+13. Alpha and beta of the fund
+14. MPPM

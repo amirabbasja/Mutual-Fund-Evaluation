@@ -49,7 +49,7 @@ def barclayHedgeIndex(fileLoc):
     tmpReturn = []
     for _, row in data.iterrows():
         for i in range(1,13):
-            tmpMonth.append(datetime.datetime(year=int(row.year),month=i,day=1)+relativedelta(months=1))
+            tmpMonth.append(datetime.datetime(year=int(row.year),month=i,day=1))
             tmpReturn.append(float(row[str(i)]))
     
     df = pd.DataFrame(list(zip(tmpMonth,tmpReturn)), columns=["Date", "barclayReturn"])
@@ -302,9 +302,32 @@ def calcRollingWinRate(df: pd.DataFrame, interval:datetime.timedelta):
     dfOut = df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x))
     return dfOut
 
-def loadRiskFreeReturn(path):
+def loadTrades(path):
     """
-    Loads the risk-free return rate
+    Loads the trades
+
+    Args:
+        path: str: the path for a csv file
+    
+    Returns:
+        A pandas dataframe
+    """
+    df = pd.read_csv(path)
+
+    # Cast the dates
+    df["buy_date"] = pd.to_datetime(df["buy_date"], dayfirst = True, format = "%d/%m/%Y %H:%M")
+    df["sell_date"] = pd.to_datetime(df["sell_date"], dayfirst = True, format = "%d/%m/%Y %H:%M")
+
+    # Cast the numbers to float
+    df[["buy_price","sell_price","lot","pnl","return"]] = df[["buy_price","sell_price","lot","pnl","return"]].astype(float)
+
+    # Cast the symbols to str
+    df["symbol"] = df["symbol"].astype(str)
+    return df
+
+def loadRiskFreeRate(path):
+    """
+    Loads the risk-free rate
 
     Args:
         path: str: the path for a csv file
@@ -315,7 +338,33 @@ def loadRiskFreeReturn(path):
     df = pd.read_csv(path)
     df = df[["Date", "Price"]]
     df["Date"] = pd.to_datetime(df["Date"], dayfirst = True, format = "%m/%d/%Y")
+    df["Price"] = df["Price"]/100.
     return df
+
+
+def calcRollingTrackingError(df: pd.DataFrame, interval:datetime.timedelta):
+    """
+    Calculates the tracking error of the fund relative to a specific 
+    Benchmark. The dataframe should have two columns, portfolio and 
+    benchmark returns.
+
+    Args:   
+        df: pd.Dataframe: The fund's returns
+        interval: datetime.timedelta:The window size in days
+    """
+    
+    def __internalFcn(x:pd.Series, _df:pd.DataFrame):
+        _df = _df.loc[x.index]
+        diff = _df.iloc[:,0]-_df.iloc[:,1]
+
+        # Return the tracking error
+        return diff.std()
+    
+    # Calculate the Downside deviation
+    dfOut = pd.DataFrame(df.rolling(interval, min_periods = interval.days).apply(lambda x: __internalFcn(x, df)).iloc[:,0])
+    dfOut.columns = ["Tracking error"]
+    
+    return pd.DataFrame(dfOut)
 
 def loadBTCReturn(path):
     """
