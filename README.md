@@ -19,3 +19,6 @@ Metrics used in this repository:
 12. Max drawdown
 13. Alpha and beta of the fund
 14. MPPM
+15. CRP (Cross Product Ratio)
+16. Hit rate
+17. Payoff ratio

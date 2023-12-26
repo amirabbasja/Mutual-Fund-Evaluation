@@ -594,3 +594,25 @@ def calcRollingDownsideDeviation(df: pd.DataFrame, interval:datetime.timedelta, 
     dfOut.columns = ["Downside Deviation"]
     
     return pd.DataFrame(dfOut)
+
+def calcPayoffRatio(df:pd.DataFrame):
+    """
+    Calculates payoff ratio by dividing the average profit to average loss trades
+    
+    Args:
+        df: pd.Dataframe: A dataframe containing PNLs for each individual trade. 
+            The index should be in datetime 
+    """
+    return pd.DataFrame(df[0<df.PNL].mean()/df[df.PNL<0].mean().abs()).iloc[0,0]
+
+
+def calcHitRate(df:pd.DataFrame):
+    """
+    Calculates the hit rate from a track record by dividing number of winning 
+    trades by the total number of executed trades
+    
+    Args:
+        df: pd.Dataframe: A dataframe containing PNLs for each individual trade. 
+            The index should be in datetime 
+    """
+    return df[0<df.PNL].shape[0]/(df.shape[0])*100
