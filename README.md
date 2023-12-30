@@ -30,6 +30,41 @@ Metrics used in this repository:
 
 The calculation and interpretation of each metric is explained in this section:
 
+### 8. Sharpe Ratio
+In 1966, American economist William Sharp proposed an indicator that comprehensively considers returns and risks, using standard deviation to measure the total risk borne by a fund and evaluating fund performance at a premium per unit of
+total risk. The Sharpe index represents how much excess return will be generated for each unit of risk taken.
+
+* When the Sharpe index is positive, it indicates that the fund's return rate is higher than the volatility risk. The larger the Sharpe index, the higher the fund's unit risk premium and performance.
+* When the Sharpe index is negative, it indicates that the fund's operational risk is greater than the fund's return rate. The smaller the Sharpe index, the smaller the fund's unit risk premium, The poorer the performance of the fund
+
+The ratio is calculated a follows:
+
+![alt text](https://latex.codecogs.com/svg.image?Sharpe%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7B%5Csigma%20_%7Bp%7D%7D)
+
+Where:
+
+* ![alt text](https://latex.codecogs.com/svg.image?R_%7Bp%7D) is the portfolio return
+* ![alt text](https://latex.codecogs.com/svg.image?R_%7Bf%7D) is the risk-free return
+* ![alt text](https://latex.codecogs.com/svg.image?%5Csigma_%7Bp%7D) standard deviation of the portfolio's excess return
+
+### 9. Information Ratio
+The information ratio characterizes the excess returns brought by unit active risk. From the perspective of active management, the risk adjusted portfolio returns are examined. The larger the information ratio, the higher the excess returns obtained by fund managers' unit tracking errors. The calculation formula for information ratio is as follows:
+
+![alt text](https://latex.codecogs.com/svg.image?Information%5C;ratio%5C;=%5Cfrac%7BExcess%5C;return%5C;of%20the%5C;protfolio%7D%7BStandard%5C;deviation%5C;of%5C;exces%5C;return%7D)
+
+### 10. Standard deviation of returns
+The standard deviation of return measures the degree of deviation between the daily return of a fund and the average return. It is used to measure the volatility of fund returns. The larger the standard deviation of a fund, the greater the corresponding risk
+
+### 11. Downside deviation
+The downward standard deviation is an improvement on the traditional standard deviation indicator. The downward standard deviation establishes a certain critical or minimum value, and only calculates the "bad" observations below that critical value. Observations above the cut-off value are considered 'good' and will be ignored. The downward deviation refers to the risk of a decline in securities returns when the market environment deteriorates, reflecting the magnitude of the decline in returns when the index goes down. The larger the decline, the higher the risk is
+
+![alt text](https://latex.codecogs.com/svg.image?E(%5C!r_%7Bi%7D)=r_%7Bf%7D&plus;%5Cbeta%20_%7Bim%7D(E(%5C!r_%7Bm%7D-r_%7Bm%7D)))
+
+Where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bi%7D) is the yield of the i - th period of the fund, ![alt text](https://latex.codecogs.com/svg.image?r_%7Bt%7D) is the target yield, and 𝑛 represents the number of periods where the fund yield is less than the target yield
+
+### 12. Maximum drawdown
+The maximum drawdown is used to describe the worst-case scenario that may occur after buying a fund product. It is calculated from any historical point in a selected period, and the return rate when the product's net value drops to the lowest point, that is, the maximum pullback amplitude. It is an important risk indicator for investment portfolios and reflects the maximum loss that may be faced in the investment.
+
 ### 13. Tracking error
 Tracking Error refers to the standard deviation of the return between the portfolio return and the benchmark return, which is an important indicator of the deviation between fund returns and target index returns. The larger the value, the greater the risk of active investment by the fund manager, and a tracking error of more than 2% indicates a significant difference.
 
