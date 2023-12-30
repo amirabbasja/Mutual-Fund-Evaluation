@@ -30,6 +30,28 @@ Metrics used in this repository:
 
 The calculation and interpretation of each metric is explained in this section:
 
+### 17. Hit rate
+The Hit Rate represents the percentage of trades that are profitable over a specified period. It provides insights into the consistency of a trading strategy.
+
+* A Hit Rate of 50% means that 50% of all trades were profitable, and it's equivalent to random chance.
+* A Hit Rate greater than 50% suggests that more than half the trades were profitable, indicating a potentially effective trading strategy.
+* Conversely, a Hit Rate less than 50% indicates that less than half of the trades were profitable.
+
+The metric is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?Hit%5C;rate%5C;=%5Cfrac%7BNumber%5C;of%5C;losing%5C;trades%7D%7BNumber%5C;of%5C;losing%5C;trades%7D)
+
+### 18. Payoff ratio
+The Payoff Ratio, also known as the Profit/Loss Ratio, measures the relationship between the average profit from winning trades and the average loss from losing trades. It essentially gives an idea about the reward-to-risk ratio of a trading strategy.
+
+* A Payoff Ratio greater than 1 indicates that the average profit from winning trades is greater than the average loss from losing trades.
+* A Payoff Ratio less than 1 suggests the opposite: that losses are on average bigger than wins.
+* A Payoff Ratio equal to 1 means that the average profit and average loss are the same.
+
+The metric is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?Payoff%5C;ratio%5C;=%5C;%5Cfrac%7BAerage%5C;profit%5C;per%5C;winning%5C;trade%7D%7BAverage%5C;Loss%5C;per%5C;losing%5C;trade%7D)
+
 ### 19. Turnover rate
 The turnover rate of a fund is an indicator that reflects the frequency of stock trading in a fund. It is used to measure the frequency of changes in the fund's investment portfolio and the average length of time a fund manager holds stocks. It is an important indicator for evaluating the investment style of a fund manager.
 
