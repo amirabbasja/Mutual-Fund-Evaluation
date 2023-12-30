@@ -44,4 +44,4 @@ The longer the holding period of a fund manager, the higher the comprehensive re
 
 The metric is calculated below:
 
-![alt text](https://latex.codecogs.com/svg.image?Average\;holding\;time\;=\;\frac{Innterval\;duration}{Turnover\;rate})
+![alt text](https://latex.codecogs.com/svg.image?Average%5C;holding%5C;time%5C;=%5C;%5Cfrac%7BInterval%5C;duration%7D%7BTurnover%5C;rate%7D)
