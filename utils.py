@@ -638,3 +638,27 @@ def calcTurnOverRate(df:pd.DataFrame):
     denumerator = np.mean(df.AuM)
     
     return float(numerator/denumerator)
+
+def calcAvgHoldingTime(df:pd.DataFrame):
+    """
+    Calculates the average holding time for the fund manager. The 
+    formula denoted below: The average holding time of stocks in 
+    a fund = Interval duration /Turnover rate
+
+    Note that the turnover rate is calculated by the calcTurnOverRate 
+    function.
+
+    Args: 
+        df: pd.Dataframe: The dataframe containing the following
+            columns: buy_price, sell_price, the trade volume, and
+            also the trade's closing date as index
+    
+    Returns: A float as holding time 
+    """
+    # Calculate turnover rate
+    turnoverRate = calcTurnOverRate(df)
+
+    #Calculate the interval duration
+    intervalDuration = (np.abs(df.index[0] - df.index[-1])).days
+    
+    return float(intervalDuration/turnoverRate)
