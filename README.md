@@ -29,7 +29,7 @@ Metrics used in this repository:
 
 The calculation and interpretation of each metric is explained in this section:
 
-# 19. Turnover rate:
+### 19. Turnover rate:
 
 The turnover rate of a fund is an indicator that reflects the frequency of stock trading in a fund. It is used to measure the frequency of changes in the fund's investment portfolio and the average length of time a fund manager holds stocks. It is an important indicator for evaluating the investment style of a fund manager.
 
