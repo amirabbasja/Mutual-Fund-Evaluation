@@ -30,6 +30,39 @@ Metrics used in this repository:
 
 The calculation and interpretation of each metric is explained in this section:
 
+### 15. Manipulation-Proof Performance Measure (MPPM)
+MPPM is used to assess the performance of an investment fund. It compares the fund's returns with both the broader market and a "risk-free rate". It also compares the fund's performance to that of the market, not merely to a risk-free rate. This enables you to determine whether the fund is actually doing well or is simply being fortunate.
+
+The metric is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?MPPM%5C;=%5Cfrac%7B1%7D%7B1-%5Crho%7DLn%5Cleft(%5Cfrac%7B1%7D%7BT%7D%5Csum_%7BT%7D%5E%7Bt=1%7D%5Cfrac%7B1&plus;rt%7D%7B1&plus;rft%7D%5Cright))
+
+Where:
+
+* ρ: This parameter is crucial for the measure. It adjusts the sensitivity of the MPPM to the returns' distribution tails. A different value of ρ will give different weight to higher or lower returns Eq (2).
+* t: This represents a specific month within the period of observation. In the context of the study, t varies from 1 to T, where T is twelve months.
+* rt: This is the monthly return of the crypto fund for month t.
+* rft: This is the monthly risk-free rate for month t. This is a standard measure used in finance to represent the return on an investment that is considered risk free, such as a short-term government bond. In this case, it is sourced from the DFO data file.
+* T: This represents the total number of months being considered in the study, which is twelve months.
+
+Also rho can be calculated as below:
+![alt text](https://latex.codecogs.com/svg.image?%5Crho=%5Cfrac%7BLn(E(1&plus;rb))-Ln(E(1&plus;rft))%7D%7BVar(Ln(1&plus;rb))%7D)
+
+Where:
+
+* ρ: This symbol typically represents a parameter or coefficient. In the context of the previous MPPM formula, ρ adjusts the sensitivity of the MPPM to the returns' distribution tails. In this equation, it's being defined in relation to expected returns, the risk-free rate, and the variability (variance) of returns.
+* E(1+rb): This represents the expected value (or mean) of the quantity 1+rb. Here, E denotes the expectation operator, which, in finance, typically means taking the average expected outcome for a random variable.
+* rb: This is the return of the crypto fund (or benchmark return) for a given period. In financial analyses, rb often stands for the return of a benchmark against which other returns are compared.
+* rf: This is the risk-free rate. In finance, the risk-free rate represents the return on an investment that's considered devoid of risk, such as a short-term government bond. It's a foundational concept in modern finance, acting as a baseline against which other returns are evaluated.
+* Var[(1+rb)]: This represents the variance of the quantity 1+rb. Variance is a statistical measure that captures the dispersion or spread of a set of data points. In the context of returns, it provides a measure of the risk or volatility of the investment. The higher the variance, the more spread out or volatile the returns are.
+
+### 16. Cross product ratio (CRP)
+The Cross Product Ratio (CPR) method is used to analyze the persistence in a fund's performance. Persistence in performance means that a fund which performed well (or poorly) in one period is likely to continue that trend in subsequent periods. The CPR method quantifies this persistence by looking at the ratio of funds that maintain their performance (either good or bad) to those that switch their performance. In this method the entire sample period is divide into equal intervals (e.g. 1 month). For each interval, if the fund/manager had a return in the top 50% are classified as winners (W), on the other hand, if the fund's return is in the low 50%, it will be classified as a loser in the said interval (L). If the fund/manager is a winner/loser in two consecutive intervals, it will be known as double winner/loser in that interval (WW/LL). On the other hand, if the manager has won in current interval and lost the prevous interval, it will be counted as winner-loser (WL) in that interval (The similar logic goes for loser-winner intervals - LW).
+
+The metric is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?CRP%5C;=%5Cfrac%7BWW&plus;LL%7D%7BWL&plus;LW%7D)
+
 ### 17. Hit rate
 The Hit Rate represents the percentage of trades that are profitable over a specified period. It provides insights into the consistency of a trading strategy.
 
