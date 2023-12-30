@@ -598,7 +598,9 @@ def calcRollingDownsideDeviation(df: pd.DataFrame, interval:datetime.timedelta, 
 
 def calcPayoffRatio(df:pd.DataFrame):
     """
-    Calculates payoff ratio by dividing the average profit to average loss trades
+    Calculates payoff ratio by dividing the average profit to average loss trades.
+    formula: Payoff ratio = average profit per winning trade / average loss per 
+    losing trade.
     
     Args:
         df: pd.Dataframe: A dataframe containing PNLs for each individual trade. 
