@@ -30,6 +30,26 @@ Metrics used in this repository:
 
 The calculation and interpretation of each metric is explained in this section:
 
+### 13. Tracking error
+Tracking Error refers to the standard deviation of the return between the portfolio return and the benchmark return, which is an important indicator of the deviation between fund returns and target index returns. The larger the value, the greater the risk of active investment by the fund manager, and a tracking error of more than 2% indicates a significant difference.
+
+### 14. Alpha and beta of the fund
+The definition of Beta originated from the classic financial theory proposed by William Sharp, John Lintner, Jack Treynor, and Jan Mossin in 1964- the Capital Asset Pricing Model. The purpose of this model is to calculate the reasonable return on an investment product or portfolio, which is simply to calculate the return on assets. The formula for the capital asset pricing model is:
+
+![alt text](https://latex.codecogs.com/svg.image?E(%5C!r_%7Bi%7D)=r_%7Bf%7D&plus;%5Cbeta%20_%7Bim%7D(E(%5C!r_%7Bm%7D-r_%7Bm%7D)))
+
+Where E(ri) represents the expected return rate of asset r, rf is the risk-free interest rate, and the risk-free interest rate represents the time value of the asset. ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) can be derived from the above formula. Therefore, ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) actually compares the ratio between the expected excess return of asset i relative to the risk-free interest rate and the expected excess return of bearing market risk, reflecting the sensitivity of asset i's price to overall market fluctuations Therefore ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) is also known as risk coefficient.
+
+* If ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) > 1, it indicates that the expected return volatility of asset 𝑖 is greater than the overall market.
+* if ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) < 1, it indicates that the expected return volatility of asset 𝑖 is lower than the overall market.
+* if ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) = 1, it indicates that the volatility of expected returns on asset 𝑖 is the same as the overall market.
+
+The capital asset model actually calculates the theoretical expected return of the investment portfolio, as it assumes that investors are rational and that the capital market is a completely efficient market without any friction hindering investment. The difference between the actual expected return and the  theoretical expected return is called 𝛼, which represents the portion of the investment that exceeds the market or benchmark return, also known as excess return. The calculation formula for ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) is:
+
+![alt text](https://latex.codecogs.com/svg.image?%5Calpha=E(r_%7Bi%7D)-r_%7Bf%7D&plus;%5Cbeta%20_%7Bim%7D(E(r_%7Bm%7D)-r_%7Bf%7D))
+
+![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) may not always be a positive number. When ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) is less than 0, it indicates that the active management strategy of a fund manager is not successful. Therefore, when judging a fund manager's historical performance, we cannot only evaluate it based on the absolute return it has obtained. In an upward market, a fund manager with a high beta but a negative ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) may also periodically obtain a seemingly good absolute return, but his active management ability may not be outstanding, When the market falls, it will also fall more, so finding a positive ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) is the goal that every fund manager and fund investor has been striving for
+
 ### 15. Manipulation-Proof Performance Measure (MPPM)
 MPPM is used to assess the performance of an investment fund. It compares the fund's returns with both the broader market and a "risk-free rate". It also compares the fund's performance to that of the market, not merely to a risk-free rate. This enables you to determine whether the fund is actually doing well or is simply being fortunate.
 
@@ -45,7 +65,8 @@ Where:
 * rft: This is the monthly risk-free rate for month t. This is a standard measure used in finance to represent the return on an investment that is considered risk free, such as a short-term government bond. In this case, it is sourced from the DFO data file.
 * T: This represents the total number of months being considered in the study, which is twelve months.
 
-Also rho can be calculated as below:
+Also, rho can be calculated as below:
+
 ![alt text](https://latex.codecogs.com/svg.image?%5Crho=%5Cfrac%7BLn(E(1&plus;rb))-Ln(E(1&plus;rft))%7D%7BVar(Ln(1&plus;rb))%7D)
 
 Where:
