@@ -37,7 +37,7 @@ studies have found that compared to passive index funds, active equity funds hav
 
 The metric is calculated below:
 
-![alt text](https://latex.codecogs.com/svg.image?Turnover\;rate=\frac{MAX(Total\;cost\;of\;buying\;stocks,Total\;revenue\;from\;selling\;stocks)}{Fund's\;AuM\;in\;the\;required\;period})
+![alt text](https://latex.codecogs.com/svg.image?Turnover%5C;rate%5C;=%5C;%5Cfrac%7BMAX(Total%5C;cost%5C;of%5C;buying%5C;stocks,Totla%5C;revenue%5C;from%5C;selling%5C;stocks)%7D%7BAVG(Fund's%5C;AuM%5C;in%5C;the%5C;required%5C;period)%7D)
 
 ### 20. Average holding time
 The longer the holding period of a fund manager, the higher the comprehensive return on fund performance. In addition, fund managers with long-term holdings hold a more concentrated investment portfolio and a lower turnover rate, which allows them to have more time and energy to collect information about the companies they invest in, thereby supervising the opportunistic behavior of the company's management and effectively ensuring the improvement of the company's value.
