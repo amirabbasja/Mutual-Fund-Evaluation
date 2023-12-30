@@ -37,4 +37,4 @@ studies have found that compared to passive index funds, active equity funds hav
 
 The metric is calculated below:
 
-![alt text](https://latex.codecogs.com/svg.image?Turnover&space;rate=\frac{MAX(Total\:cost\:of\:opening\:positions,Total\:revenue\:from\:closing\:positions)}{AVG(Fund\:AuM\:in\:the\:reporting\:)})
+![alt text](https://latex.codecogs.com/svg.image?Turnover\;rate=\frac{MAX(Total\;cost\;of\;buying\;stocks,Total\;revenue\;from\;selling\;stocks)}{Fund's\;AuM\;in\;the\;required\;period})

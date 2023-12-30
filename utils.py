@@ -578,6 +578,7 @@ def calcRollingDownsideDeviation(df: pd.DataFrame, interval:datetime.timedelta, 
 
     Args:   
         df: pd.Dataframe: The fund's returns
+        interval: datetime.timedelta: The window size
         MAR: float: Minimum acceptable return (Not in percentages)
     """
 
@@ -616,3 +617,24 @@ def calcHitRate(df:pd.DataFrame):
             The index should be in datetime 
     """
     return df[0<df.PNL].shape[0]/(df.shape[0])*100
+
+def calcTurnOverRate(df:pd.DataFrame):
+    """
+    Calculates the turnover rate of the fund/algorithm with the formula:
+    Turnover Rate = MAX (total cost of buying stocks during the reporting 
+    period, total revenue from selling stocks during the reporting period
+    )/AVG (market value of stocks)
+
+    Args: 
+        df: pd.Dataframe: The dataframe containing the following
+            columns: buy_price, sell_price, the trade volume, and
+            also the trade's closing date as index
+    
+    Returns: A float as the turnover rate
+    """
+    buyCost = df.buy_price*df.lot
+    sellRevenue = df.sell_price*df.lot
+    numerator = np.sum(np.maximum(buyCost, sellRevenue))
+    denumerator = np.mean(df.AuM)
+    
+    return float(numerator/denumerator)
