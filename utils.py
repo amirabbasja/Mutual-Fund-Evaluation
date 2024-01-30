@@ -6,6 +6,7 @@ import scipy
 from dateutil.relativedelta import relativedelta
 import calendar
 import quantstats as qs
+from scipy.stats import norm, t
 
 # Necessary methods
 def getDataVisionTrack(loc):
@@ -719,7 +720,6 @@ def calcVarCVar(df, confLevel, method = "historical", distribution = "normal", d
         var = df.quantile( 1 - confLevel)
         cvar = df[df>= var].mean()
     elif method == "parametric":
-        from scipy.stats import norm, t
 
         # Assuming normal distribution
         if distribution == "normal":
