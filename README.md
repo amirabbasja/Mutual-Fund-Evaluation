@@ -27,7 +27,7 @@ Metrics used in this repository:
 20. Average holding time
 21. VaR and CVaR (Normal and t-distribution)
 22. Excess return on VaR (Generalized Sharpe ratio)
-22. Conditional Sharpe ratio
+23. Conditional Sharpe ratio
 
 --------
 
