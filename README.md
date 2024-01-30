@@ -25,6 +25,8 @@ Metrics used in this repository:
 18. Payoff ratio
 19. Turnover rate
 20. Average holding time
+21. VaR and CVaR (Normal and t-distribution)
+22. Conditional Sharpe ratio
 
 --------
 
@@ -239,6 +241,6 @@ Conditional Sharpe ratio replaces VaR with conditional VaR in the denominator of
 
 The metric is calculated below:
 
-![alt text](https://latex.codecogs.com/svg.image?&space;Conditional\;Sharpe\;ratio\;=\frac{R_{p}-R_{f}}{CVaR})
+![alt text](https://latex.codecogs.com/svg.image?%20Conditional%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BCVaR%7D)
 
 Where CVaR is the conditional value at risk of returns with a predefined confidence level.
