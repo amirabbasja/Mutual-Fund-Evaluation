@@ -7,6 +7,22 @@ import calendar
 import quantstats as qs
 
 # Necessary methods
+def getDataVisionTrack(loc):
+    """
+    acquires fund performance data from Vision Track platform
+
+    Args: 
+        loc: str: The location of the html file containing the data
+    """
+    df = pd.read_html(loc)
+    df = df[1]
+    cols = df.columns.tolist()
+    colsToSelect = [cols[1]]+[cols[2]]+[cols[10]]+cols[25:-1]
+    df = df[colsToSelect]
+    df = df.dropna(axis=1,how="all")
+    
+    return df
+
 def divideDateRange(rangeStart, rangeEnd, interval, count):
     """
     Divides a date range to specific intervals. The process starts from the end date and
@@ -664,3 +680,74 @@ def calcAvgHoldingTime(df:pd.DataFrame):
     intervalDuration = (np.abs(df.index[0] - df.index[-1])).days
     
     return float(intervalDuration/turnoverRate)
+
+
+def calcVarCVar(df, confLevel, method = "historical", distribution = "normal", dof = 6):
+    """
+    Calculates value at risk (VAR) and conditional value at risk (CVAR) in 
+    both historical and parametric methods. Both these values are known as 
+    the loss incurred on the investment, so the absolute values of calculations 
+    are returned. CVAR is calculated by assuming a normal or t-distribution.
+
+    Historical method: We assume that future returns will follow a similar 
+        distribution to historical returns.
+    Parametric method:  The parametric method looks at the price movements 
+        of investments over a look-back period and uses probability theory
+        to compute a portfolio's maximum loss. This method for the value 
+        at risk calculates the standard deviation of price movements of an
+        investment or security. Assuming stock price returns and volatility
+        follow a normal distribution, the maximum loss within the specified
+        confidence level is calculated.
+
+    Args:
+        df: pd.Dataframe: A pandas dataframe or series containing returns in each
+            desired interval (daily, monthly, etc.)
+        confLevel: float: A float between 0 and 1, indicating the confidence level
+            for VAR calculation
+        method: str: The method to calculate var, can be historical or parametric
+        distribution: str: The distribution to assume when calculating parametric 
+            VAR and CVAR. Two distributions are acceptable, normal and t-distribution.
+        dof: int: Degrees of freedom. Used in t-distribution formula. Disregard if you
+            chose normal distribution
+    
+    Returns:
+        Two floats, the first is VAR and teh second is CVAR.
+    """
+
+    if method == "historical":
+        var = df.quantile( 1 - confLevel)
+        cvar = df[df>= var].mean()
+    elif method == "parametric":
+        from scipy.stats import norm, t
+
+        # Assuming normal distribution
+        if distribution == "normal":
+            z_score = norm.ppf(q= 1 - confLevel)
+            var = df.mean() - (norm.ppf(confLevel) * df.std())
+            cvar = df.mean() - df.std() * (norm.pdf(z_score)/(1-confLevel))
+        elif distribution == "t-distribution":
+            xdof = t.ppf(1-confLevel, dof)
+            var = np.sqrt((dof-2)/2)*t.ppf(confLevel, dof) * df.std() - df.mean()
+            cvar = -1/(1-confLevel) * (1-dof)**(-1) * (dof-2+xdof**2) * t.pdf(xdof, dof) * df.std() - df.mean()
+        else:
+            raise "The distribution argument should should be normal or t-distribution"
+
+
+    else:
+        raise "The method argument should be either historical or parametric"
+
+    return abs(var), abs(cvar)
+
+def calcConditionalSharpeRatio(df, rf, confLevel, method = "parametric", distribution = "normal", dof = 6):
+    """
+    Calculates the conditional Sharpe ratio (Agarwal 2003).
+    The formula: (Rp - Rf) / CVAR
+
+    Args:
+        df: pd.dataframe: A dataframe containing portfolio returns
+        rf: Risk Free return
+        Rest of the args are adopted from calcVarCVar function
+    """
+
+    _, cvar = calcVarCVar(df, confLevel, method, distribution, dof)
+    return (((df+1).prod()-1) - rf) / cvar

@@ -223,3 +223,22 @@ The longer the holding period of a fund manager, the higher the comprehensive re
 The metric is calculated below:
 
 ![alt text](https://latex.codecogs.com/svg.image?Average%5C;holding%5C;time%5C;=%5C;%5Cfrac%7BInterval%5C;duration%7D%7BTurnover%5C;rate%7D)
+
+### 21. VAR and CVAR
+
+Value at Risk (VaR) and Conditional Value at Risk (CVaR) are both risk measures used to quantify the potential loss of an investment portfolio or financial instrument. However, they differ in their approach to measuring risk. Value at Risk (VaR) is a statistical measure that estimates the maximum potential loss that a portfolio or financial instrument will incur with a specified probability over a given time horizon. For example, a VaR of 1% at a one-day horizon means that there is a 1% chance that the portfolio will lose more than 1% of its value over the next day. Conditional Value at Risk (CVaR), also known as Expected Shortfall (ES), is a measure of the average loss that will occur if the VaR is breached. In other words, it measures the expected loss beyond the VaR threshold.
+
+Both parametric and historical methods for VaR and CVaR calculations are provided in this library. Both methods are explained briefly below:
+
+* Historical method: In this method, we assume that future returns will follow a similar distribution to historical returns.
+* Parametric method:  The parametric method looks at the price movements of investments over a look-back period and uses probability theory to compute a portfolio's maximum loss. This method for VaR calculates the standard deviation of price movements of an investment or security. Assuming stock price returns and volatility follow a normal distribution, the maximum loss within the specified confidence level is calculated. In this library, Student's t-distribution is provided as an alternative to the common normal distribution as well.
+
+### 22. Conditional SHarpe ratio
+
+Conditional Sharpe ratio replaces VaR with conditional VaR in the denominator of the reward to VaR ratio. Clearly, if expected shortfall is the major concern of the investor then the conditional Sharpe ratio is demonstrably favorable to the reward to VaR ratio:
+
+The metric is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?&space;Conditional\;Sharpe\;ratio\;=\frac{R_{p}-R_{f}}{CVaR})
+
+Where CVaR is the conditional value at risk of returns with a predefined confidence level.
