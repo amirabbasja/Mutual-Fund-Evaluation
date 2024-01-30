@@ -227,7 +227,7 @@ The metric is calculated below:
 
 ![alt text](https://latex.codecogs.com/svg.image?Average%5C;holding%5C;time%5C;=%5C;%5Cfrac%7BInterval%5C;duration%7D%7BTurnover%5C;rate%7D)
 
-### 21. VAR and CVAR
+### 21. VAR and CVAR and MVaR
 
 Value at Risk (VaR) and Conditional Value at Risk (CVaR) are both risk measures used to quantify the potential loss of an investment portfolio or financial instrument. However, they differ in their approach to measuring risk. Value at Risk (VaR) is a statistical measure that estimates the maximum potential loss that a portfolio or financial instrument will incur with a specified probability over a given time horizon. For example, a VaR of 1% at a one-day horizon means that there is a 1% chance that the portfolio will lose more than 1% of its value over the next day. Conditional Value at Risk (CVaR), also known as Expected Shortfall (ES), is a measure of the average loss that will occur if the VaR is breached. In other words, it measures the expected loss beyond the VaR threshold.
 
@@ -235,6 +235,12 @@ Both parametric and historical methods for VaR and CVaR calculations are provide
 
 * Historical method: In this method, we assume that future returns will follow a similar distribution to historical returns.
 * Parametric method:  The parametric method looks at the price movements of investments over a look-back period and uses probability theory to compute a portfolio's maximum loss. This method for VaR calculates the standard deviation of price movements of an investment or security. Assuming stock price returns and volatility follow a normal distribution, the maximum loss within the specified confidence level is calculated. In this library, Student's t-distribution is provided as an alternative to the common normal distribution as well.
+
+Alternatively, VaR can be modified (Favre and Galeano, 2002) to adjust for kurtosis and skewness using a Cornish–Fisher expansion as follows:
+
+![alt text](https://latex.codecogs.com/svg.image?MVaR=%5Cmu&plus;%5Cleft(z&plus;%5Cfrac%7Bz%5E%7B2%7D-1%7D%7B6%7DS&plus;%5Cfrac%7Bz%5E%7B3%7D-3z%7D%7B24%7DK-%5Cfrac%7B2z%5E%7B3%7D-5z%7D%7B36%7DS%5E%7B2%7D%5Cright)%5Csigma%20)
+
+Where z is the value based on a normal distribution, S is the skewness, K is kurtosis, t is an intermediate variable. Also, It is worthy to note that Cavenaile & Lejeune (2010) conclude that confidence levels below 95.84% should not be used to calculate MVar so that investors’ risk preference for kurtosis are maintained (i.e.so that Z increases as kurtosis decreases)
 
 ### 22. Excess return on VaR (Generalized Sharpe ratio)
 
@@ -255,3 +261,11 @@ The metric is calculated below:
 ![alt text](https://latex.codecogs.com/svg.image?%20Conditional%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BCVaR%7D)
 
 Where CVaR is the conditional value at risk of returns with a predefined confidence level. For more information, refer to Agarwal (2003).
+
+### 24. Modified Sharpe ratio
+
+Similar to the adjusted Sharpe ratio, the modified Sharpe ratio uses modified VaR adjusted for skewness and kurtosis:
+
+![alt text](https://latex.codecogs.com/svg.image?Modified%5C;Sharpe%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BMVaR%7D)
+
+Where MVaR is the modified value at risk (Favre and Galeano, 2002).

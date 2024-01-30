@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import datetime
+import scipy
 from dateutil.relativedelta import relativedelta
 import calendar
 import quantstats as qs
@@ -737,6 +738,40 @@ def calcVarCVar(df, confLevel, method = "historical", distribution = "normal", d
         raise "The method argument should be either historical or parametric"
 
     return abs(var), abs(cvar)
+
+def calcMVaR(df, confLevel):
+    """
+    Calculates modified VaR (Favre and Galeano, 2002). This method adjusts VAR
+    for kurtosis and skewness using a Cornish-Fisher expansion.
+
+    Args:
+        df: pd.Dataframe: A pandas dataframe or series containing returns in each
+            desired interval (daily, monthly, etc.)
+        confLevel: float: A float between 0 and 1, indicating the confidence level
+            for VAR calculation
+    """
+    z = abs(norm.ppf(1-confLevel))
+    s = scipy.stats.skew(df)
+    k = scipy.stats.kurtosis(df)
+    t = z + 1/6*(z**2-1)*s+1/24*(z**3-3*z)*k-1/36*(2*z**3-5*z)*s**2
+
+    MVaR = df.mean() - t * df.std()
+    return MVaR
+
+
+def calcModifiedSharpeRatio(df, rf, confLevel, method = "parametric", distribution = "normal", dof = 6):
+    """
+    Calculates the modified Sharpe ratio.
+    The formula: (Rp - Rf) / MVAR
+
+    Args:
+        df: pd.dataframe: A dataframe containing portfolio returns
+        rf: Risk Free return
+        Rest of the args are adopted from calcVarCVar function
+    """
+
+    mvar = calcMVaR(df, confLevel)
+    return (((df+1).prod()-1) - rf) / mvar
 
 def calcConditionalSharpeRatio(df, rf, confLevel, method = "parametric", distribution = "normal", dof = 6):
     """
