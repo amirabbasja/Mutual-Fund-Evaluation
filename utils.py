@@ -751,3 +751,18 @@ def calcConditionalSharpeRatio(df, rf, confLevel, method = "parametric", distrib
 
     _, cvar = calcVarCVar(df, confLevel, method, distribution, dof)
     return (((df+1).prod()-1) - rf) / cvar
+
+def calcExcessReturnOnVaR(df, rf, confLevel, method = "parametric", distribution = "normal", dof = 6):
+    """
+    Calculates the excess return on VaR (Dowd 2000), Also known as 
+    generalized Sharpe ratio.
+    The formula: (Rp - Rf) / VaR
+
+    Args:
+        df: pd.dataframe: A dataframe containing portfolio returns
+        rf: Risk Free return
+        Rest of the args are adopted from calcVarCVar function
+    """
+
+    var, _ = calcVarCVar(df, confLevel, method, distribution, dof)
+    return (((df+1).prod()-1) - rf) / var

@@ -26,6 +26,7 @@ Metrics used in this repository:
 19. Turnover rate
 20. Average holding time
 21. VaR and CVaR (Normal and t-distribution)
+22. Excess return on VaR (Generalized Sharpe ratio)
 22. Conditional Sharpe ratio
 
 --------
@@ -235,7 +236,17 @@ Both parametric and historical methods for VaR and CVaR calculations are provide
 * Historical method: In this method, we assume that future returns will follow a similar distribution to historical returns.
 * Parametric method:  The parametric method looks at the price movements of investments over a look-back period and uses probability theory to compute a portfolio's maximum loss. This method for VaR calculates the standard deviation of price movements of an investment or security. Assuming stock price returns and volatility follow a normal distribution, the maximum loss within the specified confidence level is calculated. In this library, Student's t-distribution is provided as an alternative to the common normal distribution as well.
 
-### 22. Conditional SHarpe ratio
+### 22. Excess return on VaR (Generalized Sharpe ratio)
+
+It is superior to the standard Sharpe ratio because it is valid regardless of the correlations of the investments being considered with the rest of our portfolio. Some illustrative numerical examples also suggest that generalized and traditional Sharpe rules can generate very different required returns, and hence lead to very different decisions.
+
+The metric is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?%20Generalized%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BVaR%7D)
+
+Where VaR is the value at risk of returns with a predefined confidence level. For more information, refer to Dowd (2000).
+
+### 23. Conditional Sharpe ratio
 
 Conditional Sharpe ratio replaces VaR with conditional VaR in the denominator of the reward to VaR ratio. Clearly, if expected shortfall is the major concern of the investor then the conditional Sharpe ratio is demonstrably favorable to the reward to VaR ratio:
 
@@ -243,4 +254,4 @@ The metric is calculated below:
 
 ![alt text](https://latex.codecogs.com/svg.image?%20Conditional%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BCVaR%7D)
 
-Where CVaR is the conditional value at risk of returns with a predefined confidence level.
+Where CVaR is the conditional value at risk of returns with a predefined confidence level. For more information, refer to Agarwal (2003).
