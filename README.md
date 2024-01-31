@@ -30,7 +30,8 @@ Metrics used in this repository:
 23. Conditional Sharpe ratio
 24. Modified Sharpe ratio
 25. Upside potential ratio
-26. Omega ratio
+26. Omega ratio (Bernardo and Ledoit ratio)
+27. d ratio
 
 --------
 
@@ -293,9 +294,9 @@ The upside potential ratio can be calculated as follows:
 
 Where MAR is the minimum acceptable return, and is chosen to match the investor’s goals, R are the empirical investment returns, Pr is the probability of making that return. Also, The numerator is the first order higher partial moment. The denominator is the square root of the second order lower partial moment. for mor information, refer to Sortino (1999).
 
-### 26. Omega ratio
+### 26. Omega ratio (Bernardo and Ledoit ratio)
 
-Presented by Shadwick and Keating (2002), The Omega Ratio is a risk-adjusted performance measure that assesses the likelihood of achieving a target return compared to the potential for under performing. A higher Omega ratio indicates a higher likelihood of achieving the target return relative to the possibility of under performing. Conversely, a lower Omega ratio suggests a greater risk of not meeting the target.
+Presented by Shadwick and Keating (2002), The Omega Ratio is a risk-adjusted performance measure that assesses the likelihood of achieving a target return compared to the potential for under performing. A higher Omega ratio indicates a higher likelihood of achieving the target return relative to the possibility of under performing. Conversely, a lower Omega ratio suggests a greater risk of not meeting the target. This ratio implicitly adjusts for both skewness and kurtosis in the return distribution
 
 * A value greater than 1 indicates a higher probability of achieving the target return
 * while a value less than 1 suggests a higher likelihood of under performing the target.
@@ -304,4 +305,14 @@ The formulation goes as follows:
 
 ![alt text](https://latex.codecogs.com/svg.image?%5COmega(MAR)=%5Cfrac%7B%5Cint_%7BMAR%7D%5E%7B%5Cinfty%7D%5B1-F(r)%5Ddr%7D%7B%5Cint_%7B%5Cinfty%7D%5E%7BMAR%7DF(r)dr%7D=%5Cfrac%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(R_%7Bi%7D-MAR,0)%7D%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(MAR-R_%7Bi%7D,0)%7D)
 
-Where F equals the cumulative distribution function of returns and MAR is the minimum acceptable return. This ratio provides investors with a more complete understanding of the risk and reward profile of an investment, especially in cases where returns are not normally distributed. Therefore, it offers a valuable tool for evaluating investment performance and making informed decisions. Also, its noteworthy that the omega ratio can be used as a ranking statistic; the higher the better. It equals 1 when MAR is the mean return. Also, Taking MAR = 0, leads to a special case, also known as Bernardo and Ledoit (1996) ratio.
+Where F equals the cumulative distribution function of returns and MAR is the minimum acceptable return. This ratio provides investors with a more complete understanding of the risk and reward profile of an investment, especially in cases where returns are not normally distributed. Therefore, it offers a valuable tool for evaluating investment performance and making informed decisions. Also, its noteworthy that the omega ratio can be used as a ranking statistic; the higher the better. It equals 1 when MAR is the mean return.
+
+* Bernado Ledoit (1996) ratio: Taking MAR = 0, leads to a special case, also known as Bernardo and Ledoit ratio or gain–loss ratio.
+
+### 27. d ratio
+
+The d ratio (Lavinio, 1999) is similar to the Bernado Ledoit ratio but inverted and taking into account the frequency of positive and negative returns. The formula is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?d%5C;ratio=%5Cfrac%7Bn_%7Bd%7D%5Csum%20max(0-R_%7Bi%7D,0)%7D%7Bn_%7Bu%7D%5Csum%20max(R_%7Bi%7D,0)%7D)
+
+Where nd is number of returns less than zero and nu number of returns greater than zero. The d ratio will have values between zero and infinity and can be used to rank the performance of portfolios. The lower the d ratio the better the performance, a value of zero indicating there are no returns less than zero and a value of infinity indicating there are no returns greater than zero. Portfolio managers with positively skewed returns will have lower d ratios.

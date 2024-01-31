@@ -840,3 +840,18 @@ def calcOmegaRatio(df, MAR):
     denumerator =  np.sum(np.max(MAR-df, 0))
 
     return numerator / denumerator
+
+def calcBernadoLedoitRatio(df):
+    """
+    Calculates Bernardo and Ledoit (1996) ratio which is a special case of 
+    the omega ratio with MAR = 0.
+
+    Args:
+        df: pd.dataframe: A pandas dataframe/series containing the returns
+            in desired timeframe.
+        MAR: float: Minimum acceptable return (e.g. 0.1 for a 10% return). 
+
+    Returns:
+        A float, indicating the upside potential ratio
+    """
+    return calcOmegaRatio(df,0)
