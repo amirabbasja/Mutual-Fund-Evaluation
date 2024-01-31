@@ -30,6 +30,7 @@ Metrics used in this repository:
 23. Conditional Sharpe ratio
 24. Modified Sharpe ratio
 25. Upside potential ratio
+26. Omega ratio
 
 --------
 
@@ -291,3 +292,16 @@ The upside potential ratio can be calculated as follows:
 ![alt text](https://latex.codecogs.com/svg.image?%20Upside%5C;potential%5C;ratio=%5Cfrac%7B%5Csum_%7BMAR%7D%5E%7B&plus;%5Cinfty%7D(R-MAR)P_%7Br%7D%7D%7B%5Csqrt%7B%7D%5Csum_%7B-%5Cinfty%7D%5E%7BMAR%7D(MAR-R)P_%7Br%7D%7D)
 
 Where MAR is the minimum acceptable return, and is chosen to match the investor’s goals, R are the empirical investment returns, Pr is the probability of making that return. Also, The numerator is the first order higher partial moment. The denominator is the square root of the second order lower partial moment. for mor information, refer to Sortino (1999).
+
+### 26. Omega ratio
+
+Presented by Shadwick and Keating (2002), The Omega Ratio is a risk-adjusted performance measure that assesses the likelihood of achieving a target return compared to the potential for under performing. A higher Omega ratio indicates a higher likelihood of achieving the target return relative to the possibility of under performing. Conversely, a lower Omega ratio suggests a greater risk of not meeting the target.
+
+* A value greater than 1 indicates a higher probability of achieving the target return
+* while a value less than 1 suggests a higher likelihood of under performing the target.
+
+The formulation goes as follows:
+
+![alt text](https://latex.codecogs.com/svg.image?%5COmega(MAR)=%5Cfrac%7B%5Cint_%7BMAR%7D%5E%7B%5Cinfty%7D%5B1-F(r)%5Ddr%7D%7B%5Cint_%7B%5Cinfty%7D%5E%7BMAR%7DF(r)dr%7D=%5Cfrac%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(R_%7Bi%7D-MAR,0)%7D%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(MAR-R_%7Bi%7D,0)%7D)
+
+Where F equals the cumulative distribution function of returns and MAR is the minimum acceptable return. This ratio provides investors with a more complete understanding of the risk and reward profile of an investment, especially in cases where returns are not normally distributed. Therefore, it offers a valuable tool for evaluating investment performance and making informed decisions. Also, its noteworthy that the omega ratio can be used as a ranking statistic; the higher the better. It equals 1 when MAR is the mean return. Also, Taking MAR = 0, leads to a special case, also known as Bernardo and Ledoit (1996) ratio.

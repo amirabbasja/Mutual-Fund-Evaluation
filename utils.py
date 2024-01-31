@@ -821,3 +821,22 @@ def calcUpsidePotentialRatio(df, MVAR):
     downside_risk = downside_returns.std()
 
     return upside_potential / downside_risk if downside_risk != 0 else float('inf')
+
+def calcOmegaRatio(df, MAR):
+    """
+    Calculates omega ratio (Shadwick and Keating, 2002). The omega ratio 
+    can be used as a ranking statistic; the higher the better. It equals 
+    1 when rT is the mean return.
+
+    Args:
+        df: pd.dataframe: A pandas dataframe/series containing the returns
+            in desired timeframe.
+        MAR: float: Minimum acceptable return (e.g. 0.1 for a 10% return). 
+
+    Returns:
+        A float, indicating the upside potential ratio
+    """
+    numerator =  np.sum(np.max(df-MAR, 0))
+    denumerator =  np.sum(np.max(MAR-df, 0))
+
+    return numerator / denumerator
