@@ -855,3 +855,26 @@ def calcBernadoLedoitRatio(df):
         A float, indicating the upside potential ratio
     """
     return calcOmegaRatio(df,0)
+
+
+def calcdRatio(df):
+    """
+    Calculates d ratio (Lavinio, 1999) which is  is similar to the Bernado 
+    Ledoit ratio but inverted and taking into account the frequency of 
+    positive and negative returns.
+
+    Args:
+        df: pd.dataframe: A pandas dataframe/series containing the returns
+            in desired timeframe.
+        MAR: float: Minimum acceptable return (e.g. 0.1 for a 10% return). 
+
+    Returns:
+        A float, indicating the upside potential ratio
+    """
+    numerator =  np.sum(np.max(0-df, 0))
+    denumerator =  np.sum(np.max(df, 0))
+    nu = df[df>=0].shape[0]
+    nd = df[df<0].shape[0]
+
+
+    return numerator * nd / denumerator / nu
