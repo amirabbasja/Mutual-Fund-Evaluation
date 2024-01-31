@@ -25,9 +25,11 @@ Metrics used in this repository:
 18. Payoff ratio
 19. Turnover rate
 20. Average holding time
-21. VaR and CVaR (Normal and t-distribution)
+21. VaR, CVaR and MVaR (Normal and t-distribution)
 22. Excess return on VaR (Generalized Sharpe ratio)
 23. Conditional Sharpe ratio
+24. Modified Sharpe ratio
+25. Upside potential ratio
 
 --------
 
@@ -269,3 +271,23 @@ Similar to the adjusted Sharpe ratio, the modified Sharpe ratio uses modified Va
 ![alt text](https://latex.codecogs.com/svg.image?Modified%5C;Sharpe%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BMVaR%7D)
 
 Where MVaR is the modified value at risk (Favre and Galeano, 2002).
+
+### 25. Upside potential ratio
+
+Upside Potential Ratio (UP Ratio) is a risk-adjusted performance measure that evaluates an investment's return in relation to its downside risk. It is designed to assess how well an investment has compensated investors for the risk they have taken. Unlike other risk-adjusted measures like the Sharpe ratio, which utilize standard deviation as a measure of risk, the Upside Potential Ratio focuses solely on downside deviation, providing a more focused assessment of downside risk.
+
+A higher Upside Potential Ratio indicates that an investment has generated a higher return relative to its downside risk. This suggests that the investment has been more rewarding for the amount of risk it has posed. Conversely, a lower Upside Potential Ratio implies that the investment's returns have not fully compensated investors for the risk they have taken.
+
+While the Upside Potential Ratio is a useful measure for evaluating risk-adjusted performance, it is important to consider the following factors when interpreting it:
+
+* Benchmark Selection: The choice of benchmark can significantly impact the Upside Potential Ratio. Selecting an appropriate benchmark that aligns with the investment's risk profile and investor expectations is crucial for meaningful comparisons.
+
+* Period and Frequency of Calculation: The Upside Potential Ratio should be calculated over a relevant time horizon and frequency that reflects the investment's characteristics and the investor's risk tolerance.
+
+* Comparative Analysis: The Upside Potential Ratio should be compared to similar investments within the same asset class or benchmark to assess its relative risk-adjusted performance.
+
+The upside potential ratio can be calculated as follows:
+
+![alt text](https://latex.codecogs.com/svg.image?%20Upside%5C;potential%5C;ratio=%5Cfrac%7B%5Csum_%7BMAR%7D%5E%7B&plus;%5Cinfty%7D(R-MAR)P_%7Br%7D%7D%7B%5Csqrt%7B%7D%5Csum_%7B-%5Cinfty%7D%5E%7BMAR%7D(MAR-R)P_%7Br%7D%7D)
+
+Where MAR is the minimum acceptable return, and is chosen to match the investor’s goals, R are the empirical investment returns, Pr is the probability of making that return. Also, The numerator is the first order higher partial moment. The denominator is the square root of the second order lower partial moment. for mor information, refer to Sortino (1999).

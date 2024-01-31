@@ -801,3 +801,23 @@ def calcExcessReturnOnVaR(df, rf, confLevel, method = "parametric", distribution
 
     var, _ = calcVarCVar(df, confLevel, method, distribution, dof)
     return (((df+1).prod()-1) - rf) / var
+
+
+def calcUpsidePotentialRatio(df, MVAR):
+    """
+    Calculates upside potential ratio (Sortino, 1999)
+
+    Args:
+        df: pd.dataframe: A pandas dataframe/series containing the returns
+            in desired timeframe.
+        MVAR: float: Minimum acceptable return (e.g. 0.1 for a 10% return). 
+
+    Returns:
+        A float, indicating the upside potential ratio
+    """
+    upside_returns = df[df > MVAR] - MVAR
+    downside_returns = df[df < MVAR] - MVAR
+    upside_potential = upside_returns.mean()
+    downside_risk = downside_returns.std()
+
+    return upside_potential / downside_risk if downside_risk != 0 else float('inf')
