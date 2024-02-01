@@ -1013,7 +1013,7 @@ def calcBurkeRatio(dfDD, dfReturns, rfReturns):
     
     if drawdowns.shape[0] == 0:
         # No drawdowns found
-        print("Sterling ratio: No draw downs found in the provided dataset")
+        print("Burke ratio: No drawdowns found in the provided dataset")
         return np.inf
     else:
         return (dfReturns.mean() - rfReturns) / np.sqrt(drawdowns.pow(2).sum())
@@ -1032,3 +1032,29 @@ def calcAdjustedSharpeRatio(dfReturns, rfReturns):
     S = scipy.stats.skew(dfReturns)
     K = scipy.stats.kurtosis(dfReturns)
     return SR*(1+S/6*SR-(K-3)/24*SR**2)
+
+    
+def calcBurkeRatio(dfDD, dfReturns, threshold):
+    """
+    Calculates the {Prospect ratio (Wantable, 2014)
+
+    Args:
+        dfDD: pd.Series: A pandas series with indexes as dates. The draw
+            downs are calculated using this dataframe. It is suggested that
+            this dataframe have a maximum timeframe of daily entries. Using
+            weekly/monthly entries may lead to null dataframes. Note that this 
+            data series should contain the returns, not the AuM or NAV.
+        dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
+            returns.
+        threshold: float: Minimum acceptable return threshold.
+    """
+    # Get the drawdown dataset
+    drawdowns = qs.stats.drawdown_details(dfDD)
+    drawdowns = drawdowns.sort_values("max drawdown", ascending=True)["max drawdown"]/100
+    
+    if drawdowns.shape[0] == 0:
+        # No drawdowns found
+        print("Prospect ratio: No drawdowns found in the provided dataset")
+        return np.inf
+    else:
+        return (1/dfReturns.shape[0]*(np.max(dfReturns,0)+2.25*np.min(dfReturns,0))-threshold)/np.std(drawdowns)

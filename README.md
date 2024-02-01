@@ -382,3 +382,9 @@ Where:
 * K is the kurtosis of the return distribution
 
 A higher ASR value indicates a more attractive risk-adjusted performance. However, the ASR provides a more nuanced assessment by taking into account the impact of skewness and kurtosis on the return distribution. As with any risk-adjusted measure, the ASR is most valuable when used for the relative ranking of investments, as specific magnitudes are challenging to interpret in isolation.
+
+### 34. Prospect ratio
+
+Watanabe (2014) notes that people have a tendency to feel loss greater than gain – a well-known phenomenon described by prospect theory (Kahneman and Tversky, 1979). He suggests penalizing loss as follows in the prospect ratio:
+
+![alt text](https://latex.codecogs.com/svg.image?Prospect%5C;ratio=%5Cfrac%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi=1%7D%5E%7Bn%7D(MAX(R_%7Bi%7D&plus;2.25Min(R_%7Bi%7D,0)))-%5Ctau%7D%7B%5Csigma%20_%7BD%7D%7D)
