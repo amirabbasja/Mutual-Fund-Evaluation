@@ -912,3 +912,63 @@ def calcKappa3Ratio(df, threshold):
     LPM3 = calcLPMn(df, threshold, 3)
     kappa = (df.mean() - threshold)/np.power(LPM3,1/3)
     return kappa
+
+def calcSterlingRatio(dfDD, dfReturns, rfReturns, nd):
+    """
+    Calculates the Sterling ratio (McCafferty, 2003). This function uses 
+    quantstats library to get the drawdowns in the dataset.
+
+    Args:
+        dfDD: pd.Series: A pandas series with indexes as dates. The draw
+            downs are calculated using this dataframe. It is suggested that
+            this dataframe have a maximum timeframe of daily entries. Using
+            weekly/monthly entries may lead to null dataframes. Note that this 
+            data series should contain the returns, not the AuM or NAV.
+        dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
+            returns.
+        rfReturns: float: Average risk-free rate of return.
+        nd: int: Number of the biggest draw downs to compute
+    """
+    # Get the drawdown dataset
+    drawdowns = qs.stats.drawdown_details(dfDD)
+    drawdowns = drawdowns.sort_values("max drawdown", ascending=True)
+
+    if drawdowns.shape[0] < nd:
+        drawdowns = drawdowns
+        print(f"Sterling ratio - warning: Only {drawdowns.shape[0]} exists while nd = {nd}")
+    else:
+        drawdowns = drawdowns.iloc[:nd]
+        drawdowns = drawdowns["max drawdown"] / 100
+    
+    if drawdowns.shape[0] == 0:
+        # No drawdowns found
+        print("Sterling ratio: No draw downs found in the provided dataset")
+        return np.inf
+    else:
+        return (dfReturns.mean() - rfReturns) / abs(drawdowns.mean() )
+
+
+def calcSterlingRatio(dfAuM, dfReturns, rfReturns):
+    """
+    Calculates the Sterling-calmar ratio. Perhaps the most common variation of
+    the Sterling ratio uses the average annual maximum drawdown in the denominator
+    over 3 years. A combination of both Sterling and Calmar concepts
+
+    Args:
+        dfAuM: pd.Series: A pandas series indicating portfolio size
+        dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
+            returns.
+        rfReturns: float: Average risk-free rate of return.
+        nd: int: Number of the biggest draw downs to compute
+    """
+    # Get the max drawdown
+    Roll_Max = dfAuM.cummax()
+    Daily_Drawdown = dfAuM/Roll_Max - 1.0
+    Max_Drawdown = Daily_Drawdown.cummin()
+
+    if Max_Drawdown.shape[0] == 0:
+        # No drawdowns found
+        print("Sterling-calmar ratio: No draw downs found in the provided dataset")
+        return np.inf
+    else:
+        return (dfReturns.mean() - rfReturns) / abs(Max_Drawdown).max()

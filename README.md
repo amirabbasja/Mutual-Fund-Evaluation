@@ -34,6 +34,7 @@ Metrics used in this repository:
 27. d ratio
 28. Kappa3 ratio
 29. Sterling ratio
+30. Sterling-Calmar ratio
 
 --------
 
@@ -339,6 +340,12 @@ A modified version of sterling ratio is implemented in the current work. The ori
 
 Also, Bacon (2012) developed an alternate Sterling ratio by adopting Sharpe ratio:
 
-![alt text](https://latex.codecogs.com/svg.image?%20Original%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D) 
+![alt text](https://latex.codecogs.com/svg.image?%20Updated%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D) 
 
 Where N is the amount of maximum largest drawdown periods to consider in the evaluation. A higher Sterling ratio indicates a more attractive risk-adjusted performance, with a value greater than 1 suggesting a better reward for the risk taken each year. However, differences in specific magnitude are challenging to interpret, so the ratio is primarily used for relative ranking of investments
+
+### 30. Sterling ratio
+
+Perhaps the most common variation of the Sterling ratio uses the average annual maximum drawdown in the denominator over 3 years. A combination of both Sterling and Calmar concepts. The formulation goes as follows:
+
+![alt text](https://latex.codecogs.com/svg.image?Sterling-Calmar%5C;ratio=%5Cfrac%7BR_%7Bp%7D-_%7BR%7Df%7D%7BDrawdown_%7BMax%7D%7D)
