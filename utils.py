@@ -878,3 +878,37 @@ def calcdRatio(df):
 
 
     return numerator * nd / denumerator / nu
+
+def calcLPMn(df, threshold, n):
+    """
+    Calculates the lower partial moment (Harlow, 1991)
+
+    Args:
+        df: pd.dataframe: A pandas dataframe/series containing the returns
+            in desired timeframe.
+        threshold: float: The target return.
+        n: int: The power to use in formula.
+
+    Returns:
+        A float, indicating the upside potential ratio
+    """
+    
+    return np.sum(np.power(np.max(threshold-df,0),n)) / df.shape[0]
+
+
+def calcKappa3Ratio(df, threshold):
+    """
+    Calculates kappa3 ratio (Kaplan and Knowles, 2004)
+
+    Args:
+        df: pd.dataframe: A pandas dataframe/series containing the returns
+            in desired timeframe.
+        threshold: float: The target return. 
+        MAR: float: Minimum acceptable return (e.g. 0.1 for a 10% return). 
+
+    Returns:
+        A float, indicating the upside potential ratio
+    """
+    LPM3 = calcLPMn(df, threshold, 3)
+    kappa = (df.mean() - threshold)/np.power(LPM3,1/3)
+    return kappa

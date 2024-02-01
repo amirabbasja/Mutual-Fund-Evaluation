@@ -32,6 +32,8 @@ Metrics used in this repository:
 25. Upside potential ratio
 26. Omega ratio (Bernardo and Ledoit ratio)
 27. d ratio
+28. Kappa3 ratio
+29. Sterling ratio
 
 --------
 
@@ -316,3 +318,27 @@ The d ratio (Lavinio, 1999) is similar to the Bernado Ledoit ratio but inverted 
 ![alt text](https://latex.codecogs.com/svg.image?d%5C;ratio=%5Cfrac%7Bn_%7Bd%7D%5Csum%20max(0-R_%7Bi%7D,0)%7D%7Bn_%7Bu%7D%5Csum%20max(R_%7Bi%7D,0)%7D)
 
 Where nd is number of returns less than zero and nu number of returns greater than zero. The d ratio will have values between zero and infinity and can be used to rank the performance of portfolios. The lower the d ratio the better the performance, a value of zero indicating there are no returns less than zero and a value of infinity indicating there are no returns greater than zero. Portfolio managers with positively skewed returns will have lower d ratios.
+
+### 28. Kappa3
+
+The Kappa 3 ratio, also known as the Kappa ratio, is a measure of risk-adjusted performance that considers downside risk. It was introduced by Kaplan and Knowles in 2004 and is mainly used to rank investments in terms of attractiveness. The Kappa 3 ratio, similar to the Omega ratio and Sortino ratio, does not assume returns are normally distributed, making it a valuable tool for analyzing investments with asymmetric return distributions. The Kappa 3 ratio is calculated using the formula:
+
+![alt text](https://latex.codecogs.com/svg.image?Kappa3=%5Cfrac%7B%5Cmu-%5Ctau%7D%7B(LPM(%5Ctau))%5E%7B%5Cfrac%7B1%7D%7B3%7D%7D%7D)
+
+Where u is the mean return, tau is the return threshold and LPM is the lower partial moment (harlow, 1991), defined below:
+
+![alt text](https://latex.codecogs.com/svg.image?LPM_%7Bn%7D(%5Ctau)=%5Cfrac%7B1%7D%7BN%7D%5Csum_%7B1%7D%5E%7BT%7Dmax(%5Ctau-%5Cmu,0)%5E%7Bn%7D)
+
+Where N is the entry size. The interpretation of the Kappa 3 ratio is that the higher the value, the better the risk-adjusted performance. However, differences in Kappa values are hard to interpret, so it should be used as an ordinal scale for ranking investments. A higher Kappa 3 ratio indicates a more attractive investment, but the specific magnitude of the ratio is challenging to interpret in isolation, hence it is primarily used for relative ranking of investments
+
+### 28. Sterling ratio
+
+A modified version of sterling ratio is implemented in the current work. The original formulation acquired by Deanne Sterling Jones (McCafferty, 2003), measures the return over the average drawdown, as opposed to the more commonly used maximum drawdown. The ratio is calculated by dividing the compounded return by the absolute value of the average annual drawdown minus 10%. The resulting value is then multiplied by -1 to obtain a positive ratio. The 10% adjustment in the denominator was originally proposed at a time when T-bills were yielding 10%, and any investment with a ratio greater than 1.0 was considered to have a better risk/reward tradeoff. The original formulation is stated below:
+
+![alt text](https://latex.codecogs.com/svg.image?%20Original%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7BMax%5C;Drawdown%5C;&plus;%5C%251%200%7D)
+
+Also, Bacon (2012) developed an alternate Sterling ratio by adopting Sharpe ratio:
+
+![alt text](https://latex.codecogs.com/svg.image?%20Original%5C;sterling%5C ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D)
+
+Where N is the amount of maximum largest drawdown periods to consider in the evaluation. A higher Sterling ratio indicates a more attractive risk-adjusted performance, with a value greater than 1 suggesting a better reward for the risk taken each year. However, differences in specific magnitude are challenging to interpret, so the ratio is primarily used for relative ranking of investments
