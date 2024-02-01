@@ -35,6 +35,8 @@ Metrics used in this repository:
 28. Kappa3 ratio
 29. Sterling ratio
 30. Sterling-Calmar ratio
+31. Burke ratio
+32. Ulcer index
 
 --------
 
@@ -340,7 +342,7 @@ A modified version of sterling ratio is implemented in the current work. The ori
 
 Also, Bacon (2012) developed an alternate Sterling ratio by adopting Sharpe ratio:
 
-![alt text](https://latex.codecogs.com/svg.image?%20Updated%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D) 
+![alt text](https://latex.codecogs.com/svg.image?%20Updated%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D)
 
 Where N is the amount of maximum largest drawdown periods to consider in the evaluation. A higher Sterling ratio indicates a more attractive risk-adjusted performance, with a value greater than 1 suggesting a better reward for the risk taken each year. However, differences in specific magnitude are challenging to interpret, so the ratio is primarily used for relative ranking of investments
 
@@ -348,4 +350,35 @@ Where N is the amount of maximum largest drawdown periods to consider in the eva
 
 Perhaps the most common variation of the Sterling ratio uses the average annual maximum drawdown in the denominator over 3 years. A combination of both Sterling and Calmar concepts. The formulation goes as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?Sterling-Calmar%5C;ratio=%5Cfrac%7BR_%7Bp%7D-_%7BR%7Df%7D%7BDrawdown_%7BMax%7D%7D)
+![alt text](https://latex.codecogs.com/svg.image?Sterling-Calmar%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BDrawdown_%7BMax%7D%7D)
+
+### 31. Burke ratio
+
+It was first proposed by Burke in 1994. The ratio is calculated by taking the difference between the portfolio return and the risk-free rate, and then dividing it by the square root of the average of the squared drawdowns.The drawdown is a measure of the decline from a historical peak in an investment's value. 
+
+![alt text](https://latex.codecogs.com/svg.image?Burke%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7B%5Csqrt%7B%5Csum%20D_%7Bj%7D%5E%7B2%7D%7D%7D)
+
+The interpretation of the Burke ratio is similar to other risk-adjusted measures: a higher value indicates a more attractive risk-adjusted performance. Specifically, a Burke ratio greater than 1 suggests a better reward for the risk taken each year. However, like other ratios, the specific magnitude of the ratio is challenging to interpret in isolation, so it is primarily used for the relative ranking of investments.
+
+### 32. Ulcer index
+
+The ulcer index developed by Peter G. Martin in 1987 (Martin and McCann, 1987) (so called because of the worry suffered by both the portfolio manager and investor) is similar to drawdown deviation with the exception that the impact of the duration of drawdowns is incorporated by selecting the negative return for each period below the previous peak or high water mark. The impact of long, deep drawdowns will have a significant impact since the underperformance since the last peak is squared:
+
+![alt text](https://latex.codecogs.com/svg.image?Ulcer%5C;index=%5Csqrt%7B%5Csum_%7Bi=1%7D%5E%7Bi=n%7D%5Cfrac%7BD%5E%7B'2%7D_%7Bi%7D%7D%7Bn%7D%7D)
+
+The Ulcer Index calculates the amount as well as the time period for a percentage drawdown in comparison to the previous highs. Hence, the worse the drawdown, the more time it would take for a stock to recover and return to the original high point, therefore the higher the Ulcer Index. An advantage to the use of the Ulcer Index is to focus solely on the downward risks faced by a security.
+
+### 33. Adjusted SHarpe ratio
+
+ The Adjusted Sharpe Ratio (Pezier and White, 2006) is a risk-adjusted performance measure that extends the traditional Sharpe ratio by explicitly adjusting for skewness and kurtosis in the return distribution. Skewness measures the asymmetry of the return distribution, while kurtosis measures the thickness of the tails of the distribution. The ASR incorporates a penalty factor for negative skewness and excess kurtosis, providing a more comprehensive assessment of risk-adjusted performance.
+The formula for the Adjusted Sharpe Ratio is:
+
+![alt text](https://latex.codecogs.com/svg.image?Adjusted%5C;Sharpe%5C;ratio=SR%5B1&plus;(%5Cfrac%7BS%7D%7B6%7DSR-(%5Cfrac%7BK-3%7D%7B24%7DSR%5E%7B2%7D))%5D)
+
+Where:
+
+* SR is the traditional Sharpe ratio with data annualized
+* S is the skewness of the return distribution
+* K is the kurtosis of the return distribution
+
+A higher ASR value indicates a more attractive risk-adjusted performance. However, the ASR provides a more nuanced assessment by taking into account the impact of skewness and kurtosis on the return distribution. As with any risk-adjusted measure, the ASR is most valuable when used for the relative ranking of investments, as specific magnitudes are challenging to interpret in isolation.

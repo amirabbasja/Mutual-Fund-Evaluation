@@ -947,7 +947,6 @@ def calcSterlingRatio(dfDD, dfReturns, rfReturns, nd):
     else:
         return (dfReturns.mean() - rfReturns) / abs(drawdowns.mean() )
 
-
 def calcSterlingRatio(dfAuM, dfReturns, rfReturns):
     """
     Calculates the Sterling-calmar ratio. Perhaps the most common variation of
@@ -972,3 +971,64 @@ def calcSterlingRatio(dfAuM, dfReturns, rfReturns):
         return np.inf
     else:
         return (dfReturns.mean() - rfReturns) / abs(Max_Drawdown).max()
+
+def calcUlcerIndex(dfReturns, n = 14):
+    """
+    Calculates the Ulcer index (Martin and McCann, 1987)
+
+    Args:
+        dfReturns: pd.Dataframe: A pandas dataframe/series containing AuM in 
+            the required periods. Using daily timeframe is advised.
+        n: int: The look back period.
+    """
+
+    if n < dfReturns.shape[0]:
+        ulcerIndex = dfReturns.rolling(n, min_periods=n).apply(lambda x: (x.iloc[-1]-np.max(x))/np.max(x)*100)
+        ulcerIndex = ulcerIndex.pow(2).sum()/n
+        ulcerIndex = np.sqrt(ulcerIndex)
+        return ulcerIndex
+    else:
+        print(f"Ulcer index warning: Passed period length ({n}) in shorter than inputted dataset ({dfReturns.shape[0]}).")
+        return np.nan
+    
+def calcBurkeRatio(dfDD, dfReturns, rfReturns):
+    """
+    Calculates the Burke ratio (Burke, 1994). This function uses 
+    quantstats library to get the drawdowns in the dataset.
+
+    Args:
+        dfDD: pd.Series: A pandas series with indexes as dates. The draw
+            downs are calculated using this dataframe. It is suggested that
+            this dataframe have a maximum timeframe of daily entries. Using
+            weekly/monthly entries may lead to null dataframes. Note that this 
+            data series should contain the returns, not the AuM or NAV.
+        dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
+            returns.
+        rfReturns: float: Average risk-free rate of return.
+        nd: int: Number of the biggest draw downs to compute
+    """
+    # Get the drawdown dataset
+    drawdowns = qs.stats.drawdown_details(dfDD)
+    drawdowns = drawdowns.sort_values("max drawdown", ascending=True)["max drawdown"]/100
+    
+    if drawdowns.shape[0] == 0:
+        # No drawdowns found
+        print("Sterling ratio: No draw downs found in the provided dataset")
+        return np.inf
+    else:
+        return (dfReturns.mean() - rfReturns) / np.sqrt(drawdowns.pow(2).sum())
+
+def calcAdjustedSharpeRatio(dfReturns, rfReturns):
+    """
+    Calculates the adjusted Sharpe ratio (Pezier and White, 2006).
+
+    Args:
+        dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
+            returns.
+        rfReturns: float: Average risk-free rate of return.
+    """
+
+    SR = (dfReturns.mean() - rfReturns)/np.std(dfReturns - rfReturns)
+    S = scipy.stats.skew(dfReturns)
+    K = scipy.stats.kurtosis(dfReturns)
+    return SR*(1+S/6*SR-(K-3)/24*SR**2)
