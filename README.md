@@ -37,6 +37,8 @@ Metrics used in this repository:
 30. Sterling-Calmar ratio
 31. Burke ratio
 32. Ulcer index
+33. Adjusted SHarpe ratio
+34. Prospect ratio
 
 --------
 
