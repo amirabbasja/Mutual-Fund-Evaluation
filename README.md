@@ -331,7 +331,7 @@ Where u is the mean return, tau is the return threshold and LPM is the lower par
 
 Where N is the entry size. The interpretation of the Kappa 3 ratio is that the higher the value, the better the risk-adjusted performance. However, differences in Kappa values are hard to interpret, so it should be used as an ordinal scale for ranking investments. A higher Kappa 3 ratio indicates a more attractive investment, but the specific magnitude of the ratio is challenging to interpret in isolation, hence it is primarily used for relative ranking of investments
 
-### 28. Sterling ratio
+### 29. Sterling ratio
 
 A modified version of sterling ratio is implemented in the current work. The original formulation acquired by Deanne Sterling Jones (McCafferty, 2003), measures the return over the average drawdown, as opposed to the more commonly used maximum drawdown. The ratio is calculated by dividing the compounded return by the absolute value of the average annual drawdown minus 10%. The resulting value is then multiplied by -1 to obtain a positive ratio. The 10% adjustment in the denominator was originally proposed at a time when T-bills were yielding 10%, and any investment with a ratio greater than 1.0 was considered to have a better risk/reward tradeoff. The original formulation is stated below:
 
@@ -339,6 +339,6 @@ A modified version of sterling ratio is implemented in the current work. The ori
 
 Also, Bacon (2012) developed an alternate Sterling ratio by adopting Sharpe ratio:
 
-![alt text](https://latex.codecogs.com/svg.image?%20Original%5C;sterling%5C ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Original%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D)
 
 Where N is the amount of maximum largest drawdown periods to consider in the evaluation. A higher Sterling ratio indicates a more attractive risk-adjusted performance, with a value greater than 1 suggesting a better reward for the risk taken each year. However, differences in specific magnitude are challenging to interpret, so the ratio is primarily used for relative ranking of investments
