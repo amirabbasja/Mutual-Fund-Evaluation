@@ -130,9 +130,9 @@ The standard deviation of return measures the degree of deviation between the da
 
 The downward standard deviation is an improvement on the traditional standard deviation indicator. The downward standard deviation establishes a certain critical or minimum value, and only calculates the "bad" observations below that critical value. Observations above the cut-off value are considered 'good' and will be ignored. The downward deviation refers to the risk of a decline in securities returns when the market environment deteriorates, reflecting the magnitude of the decline in returns when the index goes down. The larger the decline, the higher the risk is
 
-![alt text](https://latex.codecogs.com/svg.image?E(%5C!r_%7Bi%7D)=r_%7Bf%7D&plus;%5Cbeta%20_%7Bim%7D(E(%5C!r_%7Bm%7D-r_%7Bm%7D)))
+![alt text](https://latex.codecogs.com/svg.image?%20Downside%5C;deviation=(%5Cfrac%7B%5Csum%20min(r_%7Bi%7D-r_%7Bt%7D)%7D%7Bn%7D)%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D)
 
-Where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bi%7D) is the yield of the i - th period of the fund, ![alt text](https://latex.codecogs.com/svg.image?r_%7Bt%7D) is the target yield, and 𝑛 represents the number of periods where the fund yield is less than the target yield
+Where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bi%7D) is the yield of the i - th period of the fund, ![alt text](https://latex.codecogs.com/svg.image?r_%7Bt%7D) is the target yield (Also known as minimum acceptable return), and 𝑛 represents the number of periods where the fund yield is less than the target yield
 
 ### 12. Maximum drawdown
 
