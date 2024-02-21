@@ -359,6 +359,56 @@ def loadRiskFreeRate(path):
     df["Price"] = df["Price"]/100.
     return df
 
+def calcMPPM(ri, rb, rf):
+    """
+    Calculates the manipulation proof performance metric.
+    Although there is no limit to the amount of months to calculate this
+    metric for, It is best to calculate this metric in a yearly basis (
+    Pass only 12 months of data).
+
+    Args:
+        ri: pd.Series: Portfolio return.
+        rb: pd.Series: Benchmark return.
+        rf: pd.Series: Risk-free return.
+    """
+    # Calculate 1+rb
+    E_rb = np.log(rb.add(1).mean())
+
+    # Calculate 1+rf
+    rfPlusOne = np.log(rf.add(1).mean())
+
+    # Calculate Variance of 1+rb
+    var = np.log(rb.add(1)).var()
+
+    # Calculate rho
+    rho = ((E_rb) - (rfPlusOne))/var
+
+    MPPM_fund = 1/(1-rho)* np.log(((ri.add(1)/rf.add(1)).pow(1-rho)).mean())
+
+    return MPPM_fund
+
+def calcCRP(ri):
+    """
+    Calculates the cross product ratio
+
+    Args:
+        ri: pd.Series: Portfolio return.
+    """
+    ri.index = range(0, ri.shape[0],1)
+    dftmp = pd.DataFrame({"FundReturn":ri})
+    dftmp["Result"] = "-" # FIlling the rows with dummy values
+    dftmp["DoubleResult"] = "-" # FIlling the rows with dummy values 
+
+    median = dftmp.FundReturn.median()
+    for i,row in dftmp.iterrows():
+        dftmp.loc[i,"Result"] = "W" if median<=row["FundReturn"] else "L" 
+
+        if i!=0:
+            if (dftmp.loc[i-1,"Result"] == "L") and (dftmp.loc[i,"Result"] == "W"): dftmp.loc[i,"DoubleResult"] = "LW"
+            if (dftmp.loc[i-1,"Result"] == "W") and (dftmp.loc[i,"Result"] == "L"): dftmp.loc[i,"DoubleResult"] = "WL"
+            if (dftmp.loc[i-1,"Result"] == "L") and (dftmp.loc[i,"Result"] == "L"): dftmp.loc[i,"DoubleResult"] = "LL"
+            if (dftmp.loc[i-1,"Result"] == "W") and (dftmp.loc[i,"Result"] == "W"): dftmp.loc[i,"DoubleResult"] = "WW"
+    return (dftmp[dftmp.DoubleResult == "WW"].shape[0]+dftmp[dftmp.DoubleResult == "LL"].shape[0])/(dftmp[dftmp.DoubleResult == "LW"].shape[0]+dftmp[dftmp.DoubleResult == "WL"].shape[0])
 
 def calcRollingTrackingError(df: pd.DataFrame, interval:datetime.timedelta):
     """
@@ -520,6 +570,20 @@ def calc_beta(dfFund, dfBenchmark):
     beta = covariance[0,1]/covariance[1,1]
     return beta
 
+def calcInformationRatio(rp, rb):
+    """
+    Calculates the Information ratio for the passed series
+
+    Args:
+        dp: pd.Series: Portfolio return
+        db: pd.Series: Benchmark return
+    
+    Returns:
+        A dataframe containing the rolling results
+    """
+    diff = rp - rb
+    return diff.mean()/diff.std()
+
 def calcRollingInformationRatio(df:pd.DataFrame, interval:datetime.timedelta):
     """
     Calculates the rolling Information ratio for the passed dataframe df
@@ -588,6 +652,37 @@ def calcRollingSTD(df: pd.DataFrame, interval:datetime.timedelta):
     dfOut.columns = ["Standard deviation"]
     return dfOut
 
+def calcMaxDrawdown(ri):
+    """
+    Calculates the maximum drawdown
+    
+    Args:
+        ri: pd.Series: Fund's returns in desired intervals. Index should be 
+            datetime.
+        
+        * Note: Avoid passing fund's AuM as ri.
+    """
+    ri = (ri.dropna()+1).cumprod() # Take fund's starting AuM to be $1 and calculate its AuM with respect to returns
+    Roll_Max = ri.cummax()
+    Daily_Drawdown = ri/Roll_Max - 1.0
+    drawDown = Daily_Drawdown.cummin()
+    return drawDown[-1]
+
+def calcDownsideDeviation(ri, MAR):
+    """
+    Calculates the downside deviation of the fund relative to a specific 
+    MAR (Minimum acceptable return). 
+
+    Args:
+        ri: pd.series: The portfolio return.
+        MAR: float: Minimum acceptable return (example: .3 for 30%)
+    """
+    # Calculate min(0, ri - MAR)
+    ri = ri - MAR
+    ri = ri[ri<0] 
+
+    return np.sqrt((ri**2).sum()/ri.shape[0])
+
 def calcRollingDownsideDeviation(df: pd.DataFrame, interval:datetime.timedelta, MAR: float):
     """
     Calculates the downside deviation of the fund relative to a specific 
@@ -602,10 +697,9 @@ def calcRollingDownsideDeviation(df: pd.DataFrame, interval:datetime.timedelta, 
 
     def __internalFcn(x:pd.Series, _df:pd.DataFrame):
         _df = _df.loc[x.index]
-        _count = _df.shape[0]
-        _df = _df.iloc[:,0] - .03
+        _df = _df.iloc[:,0] - MAR
         _df = _df[_df<0]
-        _df=np.sqrt((_df**2).sum()/_count)
+        _df=np.sqrt((_df**2).sum()/_df.shape[0])
         return _df
     
     # Calculate the Downside deviation
@@ -771,7 +865,7 @@ def calcModifiedSharpeRatio(df, rf, confLevel, method = "parametric", distributi
     """
 
     mvar = calcMVaR(df, confLevel)
-    return (((df+1).prod()-1) - rf) / mvar
+    return (df.mean() - rf) / mvar
 
 def calcConditionalSharpeRatio(df, rf, confLevel, method = "parametric", distribution = "normal", dof = 6):
     """
@@ -785,7 +879,7 @@ def calcConditionalSharpeRatio(df, rf, confLevel, method = "parametric", distrib
     """
 
     _, cvar = calcVarCVar(df, confLevel, method, distribution, dof)
-    return (((df+1).prod()-1) - rf) / cvar
+    return (df.mean() - rf) / cvar
 
 def calcExcessReturnOnVaR(df, rf, confLevel, method = "parametric", distribution = "normal", dof = 6):
     """
@@ -800,7 +894,7 @@ def calcExcessReturnOnVaR(df, rf, confLevel, method = "parametric", distribution
     """
 
     var, _ = calcVarCVar(df, confLevel, method, distribution, dof)
-    return (((df+1).prod()-1) - rf) / var
+    return (df.mean() - rf) / var
 
 
 def calcUpsidePotentialRatio(df, MVAR):
@@ -866,7 +960,6 @@ def calcdRatio(df):
     Args:
         df: pd.dataframe: A pandas dataframe/series containing the returns
             in desired timeframe.
-        MAR: float: Minimum acceptable return (e.g. 0.1 for a 10% return). 
 
     Returns:
         A float, indicating the upside potential ratio
@@ -896,49 +989,42 @@ def calcLPMn(df, threshold, n):
     return np.sum(np.power(np.max(threshold-df,0),n)) / df.shape[0]
 
 
-def calcKappa3Ratio(df, threshold):
+def calcKappa3Ratio(df, MAR):
     """
     Calculates kappa3 ratio (Kaplan and Knowles, 2004)
 
     Args:
         df: pd.dataframe: A pandas dataframe/series containing the returns
             in desired timeframe.
-        threshold: float: The target return. 
         MAR: float: Minimum acceptable return (e.g. 0.1 for a 10% return). 
 
     Returns:
         A float, indicating the upside potential ratio
     """
-    LPM3 = calcLPMn(df, threshold, 3)
-    kappa = (df.mean() - threshold)/np.power(LPM3,1/3)
+    LPM3 = calcLPMn(df, MAR, 3)
+    kappa = (df.mean() - MAR)/np.power(LPM3,1/3)
     return kappa
 
-def calcSterlingRatio(dfDD, dfReturns, rfReturns, nd):
+def calcSterlingRatio(dfReturns, rfReturns, nd):
     """
     Calculates the Sterling ratio (McCafferty, 2003). This function uses 
     quantstats library to get the drawdowns in the dataset.
 
     Args:
-        dfDD: pd.Series: A pandas series with indexes as dates. The draw
-            downs are calculated using this dataframe. It is suggested that
-            this dataframe have a maximum timeframe of daily entries. Using
-            weekly/monthly entries may lead to null dataframes. Note that this 
-            data series should contain the returns, not the AuM or NAV.
         dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
             returns.
         rfReturns: float: Average risk-free rate of return.
         nd: int: Number of the biggest draw downs to compute
     """
     # Get the drawdown dataset
-    drawdowns = qs.stats.drawdown_details(dfDD)
-    drawdowns = drawdowns.sort_values("max drawdown", ascending=True)
-
+    drawdowns = qs.stats.to_drawdown_series(dfReturns).sort_values()
+    drawdowns = drawdowns[drawdowns!=0.0]
+    
     if drawdowns.shape[0] < nd:
         drawdowns = drawdowns
         print(f"Sterling ratio - warning: Only {drawdowns.shape[0]} exists while nd = {nd}")
     else:
         drawdowns = drawdowns.iloc[:nd]
-        drawdowns = drawdowns["max drawdown"] / 100
     
     if drawdowns.shape[0] == 0:
         # No drawdowns found
@@ -947,7 +1033,7 @@ def calcSterlingRatio(dfDD, dfReturns, rfReturns, nd):
     else:
         return (dfReturns.mean() - rfReturns) / abs(drawdowns.mean() )
 
-def calcSterlingRatio(dfAuM, dfReturns, rfReturns):
+def calcSterlingCalmarRatio(dfAuM, dfReturns, rfReturns):
     """
     Calculates the Sterling-calmar ratio. Perhaps the most common variation of
     the Sterling ratio uses the average annual maximum drawdown in the denominator
@@ -958,13 +1044,12 @@ def calcSterlingRatio(dfAuM, dfReturns, rfReturns):
         dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
             returns.
         rfReturns: float: Average risk-free rate of return.
-        nd: int: Number of the biggest draw downs to compute
     """
     # Get the max drawdown
     Roll_Max = dfAuM.cummax()
     Daily_Drawdown = dfAuM/Roll_Max - 1.0
     Max_Drawdown = Daily_Drawdown.cummin()
-
+    
     if Max_Drawdown.shape[0] == 0:
         # No drawdowns found
         print("Sterling-calmar ratio: No draw downs found in the provided dataset")
@@ -991,25 +1076,20 @@ def calcUlcerIndex(dfReturns, n = 14):
         print(f"Ulcer index warning: Passed period length ({n}) in shorter than inputted dataset ({dfReturns.shape[0]}).")
         return np.nan
     
-def calcBurkeRatio(dfDD, dfReturns, rfReturns):
+def calcBurkeRatio(dfReturns, rfReturns):
     """
     Calculates the Burke ratio (Burke, 1994). This function uses 
     quantstats library to get the drawdowns in the dataset.
 
     Args:
-        dfDD: pd.Series: A pandas series with indexes as dates. The draw
-            downs are calculated using this dataframe. It is suggested that
-            this dataframe have a maximum timeframe of daily entries. Using
-            weekly/monthly entries may lead to null dataframes. Note that this 
-            data series should contain the returns, not the AuM or NAV.
         dfReturns: pd.Dataframe: A pandas dataframe/series containing the 
             returns.
         rfReturns: float: Average risk-free rate of return.
         nd: int: Number of the biggest draw downs to compute
     """
     # Get the drawdown dataset
-    drawdowns = qs.stats.drawdown_details(dfDD)
-    drawdowns = drawdowns.sort_values("max drawdown", ascending=True)["max drawdown"]/100
+    drawdowns = qs.stats.to_drawdown_series(dfReturns).sort_values()
+    drawdowns = drawdowns[drawdowns!=0.0]
     
     if drawdowns.shape[0] == 0:
         # No drawdowns found
@@ -1034,9 +1114,9 @@ def calcAdjustedSharpeRatio(dfReturns, rfReturns):
     return SR*(1+S/6*SR-(K-3)/24*SR**2)
 
     
-def calcBurkeRatio(dfDD, dfReturns, threshold):
+def calcProspectRatio(dfReturns, threshold):
     """
-    Calculates the {Prospect ratio (Wantable, 2014)
+    Calculates the Prospect ratio (Wantable, 2014)
 
     Args:
         dfDD: pd.Series: A pandas series with indexes as dates. The draw
@@ -1049,8 +1129,9 @@ def calcBurkeRatio(dfDD, dfReturns, threshold):
         threshold: float: Minimum acceptable return threshold.
     """
     # Get the drawdown dataset
-    drawdowns = qs.stats.drawdown_details(dfDD)
-    drawdowns = drawdowns.sort_values("max drawdown", ascending=True)["max drawdown"]/100
+    # Get the drawdown dataset
+    drawdowns = qs.stats.to_drawdown_series(dfReturns).sort_values()
+    drawdowns = drawdowns[drawdowns!=0.0]
     
     if drawdowns.shape[0] == 0:
         # No drawdowns found

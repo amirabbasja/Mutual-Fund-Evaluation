@@ -130,7 +130,7 @@ The standard deviation of return measures the degree of deviation between the da
 
 The downward standard deviation is an improvement on the traditional standard deviation indicator. The downward standard deviation establishes a certain critical or minimum value, and only calculates the "bad" observations below that critical value. Observations above the cut-off value are considered 'good' and will be ignored. The downward deviation refers to the risk of a decline in securities returns when the market environment deteriorates, reflecting the magnitude of the decline in returns when the index goes down. The larger the decline, the higher the risk is
 
-![alt text](https://latex.codecogs.com/svg.image?%20Downside%5C;deviation=(%5Cfrac%7B%5Csum%20min(r_%7Bi%7D-r_%7Bt%7D)%7D%7Bn%7D)%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Downside%5C;deviation=(%5Cfrac%7B%5Csum%20min(0,r_%7Bi%7D-r_%7Bt%7D)%7D%7Bn%7D)%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D)
 
 Where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bi%7D) is the yield of the i - th period of the fund, ![alt text](https://latex.codecogs.com/svg.image?r_%7Bt%7D) is the target yield (Also known as minimum acceptable return), and 𝑛 represents the number of periods where the fund yield is less than the target yield
 
@@ -140,7 +140,7 @@ The maximum drawdown is used to describe the worst-case scenario that may occur 
 
 ### 13. Tracking error
 
-Tracking Error refers to the standard deviation of the return between the portfolio return and the benchmark return, which is an important indicator of the deviation between fund returns and target index returns. The larger the value, the greater the risk of active investment by the fund manager, and a tracking error of more than 2% indicates a significant difference.
+Tracking Error refers to the standard deviation of the difference between the portfolio return and the benchmark return, which is an important indicator of the deviation between fund returns and target index returns. The larger the value, the greater the risk of active investment by the fund manager, and a tracking error of more than 2% indicates a significant difference.
 
 ### 14. Alpha and beta of the fund
 
@@ -348,7 +348,7 @@ Also, Bacon (2012) developed an alternate Sterling ratio by adopting Sharpe rati
 
 Where N is the amount of maximum largest drawdown periods to consider in the evaluation. A higher Sterling ratio indicates a more attractive risk-adjusted performance, with a value greater than 1 suggesting a better reward for the risk taken each year. However, differences in specific magnitude are challenging to interpret, so the ratio is primarily used for relative ranking of investments
 
-### 30. Sterling ratio
+### 30. Sterling-Calmar ratio
 
 Perhaps the most common variation of the Sterling ratio uses the average annual maximum drawdown in the denominator over 3 years. A combination of both Sterling and Calmar concepts. The formulation goes as follows:
 
@@ -370,7 +370,7 @@ The ulcer index developed by Peter G. Martin in 1987 (Martin and McCann, 1987) (
 
 The Ulcer Index calculates the amount as well as the time period for a percentage drawdown in comparison to the previous highs. Hence, the worse the drawdown, the more time it would take for a stock to recover and return to the original high point, therefore the higher the Ulcer Index. An advantage to the use of the Ulcer Index is to focus solely on the downward risks faced by a security.
 
-### 33. Adjusted SHarpe ratio
+### 33. Adjusted Sharpe ratio
 
  The Adjusted Sharpe Ratio (Pezier and White, 2006) is a risk-adjusted performance measure that extends the traditional Sharpe ratio by explicitly adjusting for skewness and kurtosis in the return distribution. Skewness measures the asymmetry of the return distribution, while kurtosis measures the thickness of the tails of the distribution. The ASR incorporates a penalty factor for negative skewness and excess kurtosis, providing a more comprehensive assessment of risk-adjusted performance.
 The formula for the Adjusted Sharpe Ratio is:
