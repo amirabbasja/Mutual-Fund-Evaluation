@@ -54,15 +54,15 @@ The formula can be calculated as follows:
 
 ### 2. Up/Down capture rate
 
-The up-capture return represents the ratio of fund return to market index return when the market rises. The higher the upward capture rate, the stronger the fund's ability to keep up with the market. The down-capture return represents the ratio of fund returns to market index returns when the market falls. The smaller the downward capture rate, the stronger the fund's resilience to falls.
+The up-capture return represents the ratio of fund return to market index return when the market rises. The higher the upward capture rate, the stronger the fund's ability to keep up with the market. The down-capture return represents the ratio of fund returns to market index returns when the market falls. The smaller the downward capture rate, the stronger the fund's resilience to falls (Fergusona, 2014). 
 
 The formula can be calculated as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?Up%5C;capture=%5Cfrac%7B%5Cprod_%7Bk=1%7D%5E%7Bn_%7Bup%7D%7D(1&plus;r_%7Bk%7D)-1%7D%7B%5Cprod_%7Bj=1%7D%5E%7Bn_%7Bup%7D%7D(1&plus;r_%7Bmj%7D)-1%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Up%5C;capture=%5Cfrac%7B%5Cprod_%7Bk=1%7D%5E%7Bn_%7Bup%7D%7D(1&plus;r_%7Bpk%7D)-1%7D%7B%5Cprod_%7Bj=1%7D%5E%7Bn_%7Bup%7D%7D(1&plus;r_%7Bbj%7D)-1%7D)
 
-![alt text](https://latex.codecogs.com/svg.image?Down%5C;capture=%5Cfrac%7B%5Cprod_%7Bk=1%7D%5E%7Bn_%7Bdown%7D%7D(1&plus;r_%7Bk%7D)-1%7D%7B%5Cprod_%7Bj=1%7D%5E%7Bn_%7Bdown%7D%7D(1&plus;r_%7Bmj%7D)-1%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Down%5C;capture=%5Cfrac%7B%5Cprod_%7Bk=1%7D%5E%7Bn_%7Bdown%7D%7D(1&plus;r_%7Bpk%7D)-1%7D%7B%5Cprod_%7Bj=1%7D%5E%7Bn_%7Bdown%7D%7D(1&plus;r_%7Bbj%7D)-1%7D)
 
-Where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bk%7D) represents the k-th return of the fund during the benchmark rise period  ![alt text](https://latex.codecogs.com/svg.image?r_%7Bmj%7D) represents the j-th yield of the benchmark during the period of benchmark rise.
+Where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bpk%7D) represents the k-th return of the fund during the benchmark rise period  ![alt text](https://latex.codecogs.com/svg.image?r_%7Bbj%7D) represents the j-th yield of the benchmark during the period of benchmark rise.
 
 ### 3. Win ratio
 

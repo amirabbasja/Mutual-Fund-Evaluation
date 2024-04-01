@@ -575,8 +575,8 @@ def calcInformationRatio(rp, rb):
     Calculates the Information ratio for the passed series
 
     Args:
-        dp: pd.Series: Portfolio return
-        db: pd.Series: Benchmark return
+        rp: pd.Series: Portfolio return
+        rb: pd.Series: Benchmark return
     
     Returns:
         A dataframe containing the rolling results
