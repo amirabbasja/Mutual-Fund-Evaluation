@@ -74,17 +74,19 @@ The Jensen's measure, or Jensen's alpha, is a risk-adjusted performance measure 
 
 The formula can be calculated as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?%5Calpha=r_%7Bp%7D-(r_%7Bf%7D&plus;%5Cbeta(r_%7Bm%7D-R_%7Bf%7D)))
+![alt text](https://latex.codecogs.com/svg.image?%5Calpha=r_%7Bp%7D-(r_%7Bf%7D&plus;%5Cbeta(r_%7Bm%7D-r_%7Bf%7D)))
 
 where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bm%7D) and, ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20) represent the portfolio return, risk-free return, expected return and, the portfolio beta
 
 ### 5. Calmar Ratio
 
-The Calmar ratio is a gauge of the performance of fund. It is a function of the fund's average compounded annual rate of return versus its maximum drawdown. The higher the Calmar ratio, the better it performed on a risk-adjusted basis during the given time, which is mostly commonly set at 36 months. One strength of the Calmar ratio is its use of the maximum drawdown as a measure of risk. For one thing, it's more understandable than other, more abstract risk gauges, and this makes it preferable for some investors. In addition, even though it is updated monthly, the Calmar ratio's standard three-year time frame makes it more reliable than other gauges with shorter time frames that might be more affected by natural market volatility. On the flip side, the Calmar ratio's focus on drawdown means it's view of risk is rather limited compared to other gauges, and it ignores general volatility. This makes it less statistically significant and useful.
+The Calmar ratio is a gauge of the performance of fund. It is a function of the fund's average compounded annual rate of return versus its maximum drawdown. The higher the Calmar ratio, the better it performed on a risk-adjusted basis during the given time, which is mostly commonly set at 36 months. One strength of the Calmar ratio is its use of the maximum drawdown as a measure of risk. For one thing, it's more understandable than other, more abstract risk gauges, and this makes it preferable for some investors. In addition, even though it is updated monthly, the Calmar ratio's standard three-year time frame makes it more reliable than other gauges with shorter time frames that might be more affected by natural market volatility. On the flip side, the Calmar ratio's focus on drawdown means it's view of risk is rather limited compared to other gauges, and it ignores general volatility. This makes it less statistically significant and useful (Young, 1991).
 
 The formula can be calculated as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?Calmar%5C;ratio=%5Cfrac%7BAnnual%5C;rate%5C;of%5C;return%5C;of%5C;portfolio%7D%7BMaximum%5C;drawdown%5C;in%5C;the%5C;period%7D)
+![alt text](https://latex.codecogs.com/svg.image?Calmar%5C;ratio=%5Cfrac%7Br_%7Bp%7D%7D%7BMDD%7D)
+
+Where ![alt text](https://latex.codecogs.com/svg.image?MDD) is the maximum drawdown and ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D) is the portfolio return.
 
 ### 6. Treynor Ratio
 
