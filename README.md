@@ -100,9 +100,11 @@ where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](h
 
 ### 7. Sortino ratio
 
-It is similar to the Sharpe ratio, except that it does not use standard deviation as the standard, but uses downside deviation, which is the degree to which the investment portfolio deviates from its average decline, to distinguish between good and bad volatility. The higher the ratio, the higher the excess return that the fund can achieve by taking on the same unit of downside risk.
+It is similar to the Sharpe ratio, except that it does not use standard deviation as the standard, but uses downside deviation, which is the degree to which the investment portfolio deviates from its average decline, to distinguish between good and bad volatility. The higher the ratio, the higher the excess return that the fund can achieve by taking on the same unit of downside risk (Sortino, 1994).
 
-![alt text](https://latex.codecogs.com/svg.image?Sortino%5C;ratio=%5Cfrac%7BExcess%5C;return%20of%5C;portfolio%7D%7BDownside%5C;risk%7D=%5Cfrac%7BAverage%5C;return%5C;in%5C;the%5C;desired%5C;period-Risk%5C;free%5C;return%7D%7BDownside%5C;risk%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Sortino%5C;ratio=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7B%5Csigma%20_%7Bp%7D%7D)
+
+where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D) and, ![alt text](https://latex.codecogs.com/svg.image?%5Csigma%20_%7Bp%7D) represent the portfolio return, risk-free return and, standard deviation of the negative returns (Also known as downside risk).
 
 ### 8. Sharpe Ratio
 
