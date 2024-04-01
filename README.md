@@ -412,9 +412,9 @@ Where tau indicate the minimum acceptable return and denumerator is the standard
 
 --------
 
-Metrics used in this repository:
-Retrun Based:
-1&2. market-timing and security selectivity ability (Treynor and Mazuy (TM; 1966) abd Merton and Henriksson (MH; 1981) model)
+### Retrun Based metrics
+
+1&2. market-timing and security selectivity ability (Treynor and Mazuy (TM, 1966) and, Merton and Henriksson (MH, 1981) model)
 
 The Treynor and Mazuy (TM) model and the Merton and Henriksson (MH) model are used to assess the market timing and security selection abilities of fund managers
 Treynor and Mazuy (TM; 1966) model:
