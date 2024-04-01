@@ -134,7 +134,7 @@ The standard deviation of return measures the degree of deviation between the da
 
 ### 11. Downside deviation
 
-The downward standard deviation is an improvement on the traditional standard deviation indicator. The downward standard deviation establishes a certain critical or minimum value, and only calculates the "bad" observations below that critical value. Observations above the cut-off value are considered 'good' and will be ignored. The downward deviation refers to the risk of a decline in securities returns when the market environment deteriorates, reflecting the magnitude of the decline in returns when the index goes down. The larger the decline, the higher the risk is
+The downward standard deviation is an improvement on the traditional standard deviation indicator. The downward standard deviation establishes a certain critical or minimum value, and only calculates the "bad" observations below that critical value. Observations above the cut-off value are considered 'good' and will be ignored. The downward deviation refers to the risk of a decline in securities returns when the market environment deteriorates, reflecting the magnitude of the decline in returns when the index goes down. The larger the decline, the higher the risk is (Washer, 2013).
 
 ![alt text](https://latex.codecogs.com/svg.image?%20Downside%5C;deviation=(%5Cfrac%7B%5Csum%20min(0,r_%7Bi%7D-r_%7Bt%7D)%7D%7Bn%7D)%5E%7B%5Cfrac%7B1%7D%7B2%7D%7D)
 
@@ -152,17 +152,17 @@ Tracking Error refers to the standard deviation of the difference between the po
 
 The definition of Beta originated from the classic financial theory proposed by William Sharp, John Lintner, Jack Treynor, and Jan Mossin in 1964- the Capital Asset Pricing Model. The purpose of this model is to calculate the reasonable return on an investment product or portfolio, which is simply to calculate the return on assets. The formula for the capital asset pricing model is:
 
-![alt text](https://latex.codecogs.com/svg.image?E(%5C!r_%7Bi%7D)=r_%7Bf%7D&plus;%5Cbeta%20_%7Bim%7D(E(%5C!r_%7Bm%7D-r_%7Bm%7D)))
+![alt text](https://latex.codecogs.com/svg.image?E(r_%7Bp%7D)=r_%7Bf%7D&plus;%5Cbeta%20_%7Bpm%7D(E(r_%7Bp%7D-r_%7Bf%7D)))
 
-Where E(ri) represents the expected return rate of asset r, rf is the risk-free interest rate, and the risk-free interest rate represents the time value of the asset. ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) can be derived from the above formula. Therefore, ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) actually compares the ratio between the expected excess return of asset i relative to the risk-free interest rate and the expected excess return of bearing market risk, reflecting the sensitivity of asset i's price to overall market fluctuations Therefore ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) is also known as risk coefficient.
+Where ![alt text](https://latex.codecogs.com/svg.image?E(r_%7Bp%7D)) represents the expected return rate of portfolio, ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D) is the risk-free interest rate, and the risk-free interest rate represents the time value of the asset. ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bpm%7D) can be derived from the above formula. Therefore, ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bpm%7D) actually compares the ratio between the expected excess return of asset i relative to the risk-free interest rate and the expected excess return of bearing market risk, reflecting the sensitivity of asset i's price to overall market fluctuations Therefore ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bpm%7D) is also known as risk coefficient.
 
-* If ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) > 1, it indicates that the expected return volatility of asset 𝑖 is greater than the overall market.
-* if ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) < 1, it indicates that the expected return volatility of asset 𝑖 is lower than the overall market.
-* if ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bim%7D) = 1, it indicates that the volatility of expected returns on asset 𝑖 is the same as the overall market.
+* If ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bpm%7D) > 1, it indicates that the expected return volatility of asset 𝑖 is greater than the overall market.
+* if ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bpm%7D) < 1, it indicates that the expected return volatility of asset 𝑖 is lower than the overall market.
+* if ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20_%7Bpm%7D) = 1, it indicates that the volatility of expected returns on asset 𝑖 is the same as the overall market.
 
 The capital asset model actually calculates the theoretical expected return of the investment portfolio, as it assumes that investors are rational and that the capital market is a completely efficient market without any friction hindering investment. The difference between the actual expected return and the  theoretical expected return is called 𝛼, which represents the portion of the investment that exceeds the market or benchmark return, also known as excess return. The calculation formula for ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) is:
 
-![alt text](https://latex.codecogs.com/svg.image?%5Calpha=E(r_%7Bi%7D)-r_%7Bf%7D&plus;%5Cbeta%20_%7Bim%7D(E(r_%7Bm%7D)-r_%7Bf%7D))
+![alt text](https://latex.codecogs.com/svg.image?%5Calpha=E(r_%7Bp%7D)-r_%7Bf%7D&plus;%5Cbeta%20_%7Bpm%7D(E(r_%7Bp%7D)-r_%7Bp%7D))
 
 ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) may not always be a positive number. When ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) is less than 0, it indicates that the active management strategy of a fund manager is not successful. Therefore, when judging a fund manager's historical performance, we cannot only evaluate it based on the absolute return it has obtained. In an upward market, a fund manager with a high beta but a negative ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) may also periodically obtain a seemingly good absolute return, but his active management ability may not be outstanding, When the market falls, it will also fall more, so finding a positive ![alt text](https://latex.codecogs.com/svg.image?%5Calpha%20) is the goal that every fund manager and fund investor has been striving for
 
