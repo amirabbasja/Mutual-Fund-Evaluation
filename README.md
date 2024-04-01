@@ -168,7 +168,7 @@ The capital asset model actually calculates the theoretical expected return of t
 
 ### 15. Manipulation-Proof Performance Measure (MPPM)
 
-MPPM is used to assess the performance of an investment fund. It compares the fund's returns with both the broader market and a "risk-free rate". It also compares the fund's performance to that of the market, not merely to a risk-free rate. This enables you to determine whether the fund is actually doing well or is simply being fortunate.
+MPPM is used to assess the performance of an investment fund. It compares the fund's returns with both the broader market and a "risk-free rate". It also compares the fund's performance to that of the market, not merely to a risk-free rate. This enables you to determine whether the fund is actually doing well or is simply being fortunate (Ingersoll, 2007).
 
 The metric is calculated below:
 
@@ -196,7 +196,7 @@ Where:
 
 ### 16. Cross product ratio (CRP)
 
-The Cross Product Ratio (CPR) method is used to analyze the persistence in a fund's performance. Persistence in performance means that a fund which performed well (or poorly) in one period is likely to continue that trend in subsequent periods. The CPR method quantifies this persistence by looking at the ratio of funds that maintain their performance (either good or bad) to those that switch their performance. In this method the entire sample period is divide into equal intervals (e.g. 1 month). For each interval, if the fund/manager had a return in the top 50% are classified as winners (W), on the other hand, if the fund's return is in the low 50%, it will be classified as a loser in the said interval (L). If the fund/manager is a winner/loser in two consecutive intervals, it will be known as double winner/loser in that interval (WW/LL). On the other hand, if the manager has won in current interval and lost the prevous interval, it will be counted as winner-loser (WL) in that interval (The similar logic goes for loser-winner intervals - LW).
+The Cross Product Ratio (CPR) method is used to analyze the persistence in a fund's performance. Persistence in performance means that a fund which performed well (or poorly) in one period is likely to continue that trend in subsequent periods. The CPR method quantifies this persistence by looking at the ratio of funds that maintain their performance (either good or bad) to those that switch their performance. In this method the entire sample period is divide into equal intervals (e.g. 1 month). For each interval, if the fund/manager had a return in the top 50% are classified as winners (W), on the other hand, if the fund's return is in the low 50%, it will be classified as a loser in the said interval (L). If the fund/manager is a winner/loser in two consecutive intervals, it will be known as double winner/loser in that interval (WW/LL). On the other hand, if the manager has won in current interval and lost the prevous interval, it will be counted as winner-loser (WL) in that interval (The similar logic goes for loser-winner intervals - LW) (Berman, 2006).
 
 The metric is calculated below:
 
@@ -261,35 +261,37 @@ Where z is the value based on a normal distribution, S is the skewness, K is kur
 
 ### 22. Excess return on VaR (Generalized Sharpe ratio)
 
-It is superior to the standard Sharpe ratio because it is valid regardless of the correlations of the investments being considered with the rest of our portfolio. Some illustrative numerical examples also suggest that generalized and traditional Sharpe rules can generate very different required returns, and hence lead to very different decisions.
+It is superior to the standard Sharpe ratio because it is valid regardless of the correlations of the investments being considered with the rest of our portfolio. Some illustrative numerical examples also suggest that generalized and traditional Sharpe rules can generate very different required returns, and hence lead to very different decisions (Dowd, 2000).
 
 The metric is calculated below:
 
-![alt text](https://latex.codecogs.com/svg.image?%20Generalized%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BVaR%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Generalized%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7BVaR%7D)
 
-Where VaR is the value at risk of returns with a predefined confidence level. For more information, refer to Dowd (2000).
+where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D) and ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D) represent the portfolio return and risk-free return and VaR is the value at risk of returns with a predefined confidence level. For more information, refer to Dowd (2000).
 
 ### 23. Conditional Sharpe ratio
 
-Conditional Sharpe ratio replaces VaR with conditional VaR in the denominator of the reward to VaR ratio. Clearly, if expected shortfall is the major concern of the investor then the conditional Sharpe ratio is demonstrably favorable to the reward to VaR ratio:
+Conditional Sharpe ratio replaces VaR with conditional VaR in the denominator of the reward to VaR ratio. Clearly, if expected shortfall is the major concern of the investor then the conditional Sharpe ratio is demonstrably favorable to the reward to VaR ratio (Agarwal, 2003).
 
 The metric is calculated below:
 
-![alt text](https://latex.codecogs.com/svg.image?%20Conditional%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BCVaR%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Conditional%5C;Sharpe%5C;ratio%5C;=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7BCVaR%7D)
 
 Where CVaR is the conditional value at risk of returns with a predefined confidence level. For more information, refer to Agarwal (2003).
 
 ### 24. Modified Sharpe ratio
 
-Similar to the adjusted Sharpe ratio, the modified Sharpe ratio uses modified VaR adjusted for skewness and kurtosis:
+Similar to the adjusted Sharpe ratio, the modified Sharpe ratio uses modified VaR adjusted for skewness and kurtosis (Favre and Galeano, 2002).
+
+The formula is calculated below:
 
 ![alt text](https://latex.codecogs.com/svg.image?Modified%5C;Sharpe%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BMVaR%7D)
 
-Where MVaR is the modified value at risk (Favre and Galeano, 2002).
+Where MVaR is the modified value at risk.
 
 ### 25. Upside potential ratio
 
-Upside Potential Ratio (UP Ratio) is a risk-adjusted performance measure that evaluates an investment's return in relation to its downside risk. It is designed to assess how well an investment has compensated investors for the risk they have taken. Unlike other risk-adjusted measures like the Sharpe ratio, which utilize standard deviation as a measure of risk, the Upside Potential Ratio focuses solely on downside deviation, providing a more focused assessment of downside risk.
+Upside Potential Ratio (UP Ratio) is a risk-adjusted performance measure that evaluates an investment's return in relation to its downside risk. It is designed to assess how well an investment has compensated investors for the risk they have taken. Unlike other risk-adjusted measures like the Sharpe ratio, which utilize standard deviation as a measure of risk, the Upside Potential Ratio focuses solely on downside deviation, providing a more focused assessment of downside risk (Sortino, 1999).
 
 A higher Upside Potential Ratio indicates that an investment has generated a higher return relative to its downside risk. This suggests that the investment has been more rewarding for the amount of risk it has posed. Conversely, a lower Upside Potential Ratio implies that the investment's returns have not fully compensated investors for the risk they have taken.
 
@@ -309,14 +311,14 @@ Where MAR is the minimum acceptable return, and is chosen to match the investorâ
 
 ### 26. Omega ratio (Bernardo and Ledoit ratio)
 
-Presented by Shadwick and Keating (2002), The Omega Ratio is a risk-adjusted performance measure that assesses the likelihood of achieving a target return compared to the potential for under performing. A higher Omega ratio indicates a higher likelihood of achieving the target return relative to the possibility of under performing. Conversely, a lower Omega ratio suggests a greater risk of not meeting the target. This ratio implicitly adjusts for both skewness and kurtosis in the return distribution
+Presented by Shadwick and Keating (2002), The Omega Ratio is a risk-adjusted performance measure that assesses the likelihood of achieving a target return compared to the potential for under performing. A higher Omega ratio indicates a higher likelihood of achieving the target return relative to the possibility of under performing. Conversely, a lower Omega ratio suggests a greater risk of not meeting the target. This ratio implicitly adjusts for both skewness and kurtosis in the return distribution (Shadwick, 2002).
 
 * A value greater than 1 indicates a higher probability of achieving the target return
 * while a value less than 1 suggests a higher likelihood of under performing the target.
 
 The formulation goes as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?%5COmega(MAR)=%5Cfrac%7B%5Cint_%7BMAR%7D%5E%7B%5Cinfty%7D%5B1-F(r)%5Ddr%7D%7B%5Cint_%7B%5Cinfty%7D%5E%7BMAR%7DF(r)dr%7D=%5Cfrac%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(R_%7Bi%7D-MAR,0)%7D%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(MAR-R_%7Bi%7D,0)%7D)
+![alt text](https://latex.codecogs.com/svg.image?%5COmega(MAR)=%5Cfrac%7B%5Cint_%7BMAR%7D%5E%7B%5Cinfty%7D%5B1-F(r)%5Ddr%7D%7B%5Cint_%7B%5Cinfty%7D%5E%7BMAR%7DF(r)dr%7D=%5Cfrac%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(r_%7Bi%7D-MAR,0)%7D%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%20max(MAR-r_%7Bi%7D,0)%7D)
 
 Where F equals the cumulative distribution function of returns and MAR is the minimum acceptable return. This ratio provides investors with a more complete understanding of the risk and reward profile of an investment, especially in cases where returns are not normally distributed. Therefore, it offers a valuable tool for evaluating investment performance and making informed decisions. Also, its noteworthy that the omega ratio can be used as a ranking statistic; the higher the better. It equals 1 when MAR is the mean return.
 
@@ -324,15 +326,19 @@ Where F equals the cumulative distribution function of returns and MAR is the mi
 
 ### 27. d ratio
 
-The d ratio (Lavinio, 1999) is similar to the Bernado Ledoit ratio but inverted and taking into account the frequency of positive and negative returns. The formula is calculated below:
+The d ratio  is similar to the Bernado Ledoit ratio but inverted and taking into account the frequency of positive and negative returns(Lavinio, 1999). 
 
-![alt text](https://latex.codecogs.com/svg.image?d%5C;ratio=%5Cfrac%7Bn_%7Bd%7D%5Csum%20max(0-R_%7Bi%7D,0)%7D%7Bn_%7Bu%7D%5Csum%20max(R_%7Bi%7D,0)%7D)
+The formula is calculated below:
+
+![alt text](https://latex.codecogs.com/svg.image?d%5C;ratio=%5Cfrac%7Bn_%7Bd%7D%5Csum%20max(0-r_%7Bi%7D,0)%7D%7Bn_%7Bu%7D%5Csum%20max(r_%7Bi%7D,0)%7D)
 
 Where nd is number of returns less than zero and nu number of returns greater than zero. The d ratio will have values between zero and infinity and can be used to rank the performance of portfolios. The lower the d ratio the better the performance, a value of zero indicating there are no returns less than zero and a value of infinity indicating there are no returns greater than zero. Portfolio managers with positively skewed returns will have lower d ratios.
 
 ### 28. Kappa3
 
-The Kappa 3 ratio, also known as the Kappa ratio, is a measure of risk-adjusted performance that considers downside risk. It was introduced by Kaplan and Knowles in 2004 and is mainly used to rank investments in terms of attractiveness. The Kappa 3 ratio, similar to the Omega ratio and Sortino ratio, does not assume returns are normally distributed, making it a valuable tool for analyzing investments with asymmetric return distributions. The Kappa 3 ratio is calculated using the formula:
+The Kappa 3 ratio, also known as the Kappa ratio, is a measure of risk-adjusted performance that considers downside risk. It was introduced by Kaplan and Knowles in 2004 and is mainly used to rank investments in terms of attractiveness. The Kappa 3 ratio, similar to the Omega ratio and Sortino ratio, does not assume returns are normally distributed, making it a valuable tool for analyzing investments with asymmetric return distributions (Kaplan, 2004).
+
+The Kappa 3 ratio is calculated using the formula:
 
 ![alt text](https://latex.codecogs.com/svg.image?Kappa3=%5Cfrac%7B%5Cmu-%5Ctau%7D%7B(LPM(%5Ctau))%5E%7B%5Cfrac%7B1%7D%7B3%7D%7D%7D)
 
@@ -344,7 +350,9 @@ Where N is the entry size. The interpretation of the Kappa 3 ratio is that the h
 
 ### 29. Sterling ratio
 
-A modified version of sterling ratio is implemented in the current work. The original formulation acquired by Deanne Sterling Jones (McCafferty, 2003), measures the return over the average drawdown, as opposed to the more commonly used maximum drawdown. The ratio is calculated by dividing the compounded return by the absolute value of the average annual drawdown minus 10%. The resulting value is then multiplied by -1 to obtain a positive ratio. The 10% adjustment in the denominator was originally proposed at a time when T-bills were yielding 10%, and any investment with a ratio greater than 1.0 was considered to have a better risk/reward tradeoff. The original formulation is stated below:
+A modified version of sterling ratio is implemented in the current work. The original formulation acquired by Deanne Sterling Jones, measures the return over the average drawdown, as opposed to the more commonly used maximum drawdown. The ratio is calculated by dividing the compounded return by the absolute value of the average annual drawdown minus 10%. The resulting value is then multiplied by -1 to obtain a positive ratio. The 10% adjustment in the denominator was originally proposed at a time when T-bills were yielding 10%, and any investment with a ratio greater than 1.0 was considered to have a better risk/reward tradeoff(McCafferty, 2003).
+
+The original formulation is stated below:
 
 ![alt text](https://latex.codecogs.com/svg.image?%20Original%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7BMax%5C;Drawdown%5C;&plus;%5C%251%200%7D)
 
