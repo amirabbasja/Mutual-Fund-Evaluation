@@ -107,20 +107,16 @@ It is similar to the Sharpe ratio, except that it does not use standard deviatio
 ### 8. Sharpe Ratio
 
 In 1966, American economist William Sharp proposed an indicator that comprehensively considers returns and risks, using standard deviation to measure the total risk borne by a fund and evaluating fund performance at a premium per unit of
-total risk. The Sharpe index represents how much excess return will be generated for each unit of risk taken.
+total risk. The Sharpe index represents how much excess return will be generated for each unit of risk taken (Sharpe, 1966).
 
 * When the Sharpe index is positive, it indicates that the fund's return rate is higher than the volatility risk. The larger the Sharpe index, the higher the fund's unit risk premium and performance.
 * When the Sharpe index is negative, it indicates that the fund's operational risk is greater than the fund's return rate. The smaller the Sharpe index, the smaller the fund's unit risk premium, The poorer the performance of the fund
 
 The ratio is calculated a follows:
 
-![alt text](https://latex.codecogs.com/svg.image?Sharpe%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7B%5Csigma%20_%7Bp%7D%7D)
+![alt text](https://latex.codecogs.com/svg.image?Sharpe%5C;ratio=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7B%5Csigma%20_%7Bp%7D%7D)
 
-Where:
-
-* ![alt text](https://latex.codecogs.com/svg.image?R_%7Bp%7D) is the portfolio return
-* ![alt text](https://latex.codecogs.com/svg.image?R_%7Bf%7D) is the risk-free return
-* ![alt text](https://latex.codecogs.com/svg.image?%5Csigma_%7Bp%7D) standard deviation of the portfolio's excess return
+where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D) and, ![alt text](https://latex.codecogs.com/svg.image?%5Csigma_%7Bp%7D) represent the portfolio return, risk-free return and, standard deviation of the portfolio's excess return.
 
 ### 9. Information Ratio
 
