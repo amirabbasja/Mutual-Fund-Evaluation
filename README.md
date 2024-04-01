@@ -70,11 +70,13 @@ Win rate refers to the probability of a fund being purchased at any time and hel
 
 ### 4. Jensen's alpha
 
-The Jensen's measure, or Jensen's alpha, is a risk-adjusted performance measure that represents the average return on a portfolio or investment, above or below that predicted by the capital asset pricing model (CAPM), given the portfolio's or investment's beta and the average market return. This metric is also commonly referred to as simply alpha.
+The Jensen's measure, or Jensen's alpha, is a risk-adjusted performance measure that represents the average return on a portfolio or investment, above or below that predicted by the capital asset pricing model (CAPM), given the portfolio's or investment's beta and the average market return. This metric is also commonly referred to as simply alpha (Jensen, 1964).
 
 The formula can be calculated as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?%5Calpha=R_%7Bi%7D-(R_%7Bf%7D&plus;%5Cbeta(R_%7Bm%7D-R_%7Bf%7D)))
+![alt text](https://latex.codecogs.com/svg.image?%5Calpha=r_%7Bp%7D-(r_%7Bf%7D&plus;%5Cbeta(r_%7Bm%7D-R_%7Bf%7D)))
+
+where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bm%7D) and, ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20) represent the portfolio return, risk-free return, expected return and, the portfolio beta
 
 ### 5. Calmar Ratio
 
