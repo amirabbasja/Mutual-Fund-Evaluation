@@ -122,9 +122,11 @@ where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](h
 
 ### 9. Information Ratio
 
-The information ratio characterizes the excess returns brought by unit active risk. From the perspective of active management, the risk adjusted portfolio returns are examined. The larger the information ratio, the higher the excess returns obtained by fund managers' unit tracking errors. The calculation formula for information ratio is as follows:
+The information ratio characterizes the excess returns brought by unit active risk. From the perspective of active management, the risk adjusted portfolio returns are examined. The larger the information ratio, the higher the excess returns obtained by fund managers' unit tracking errors (Clarke, 2015). The calculation formula for information ratio is as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?Information%5C;ratio%5C;=%5Cfrac%7BExcess%5C;return%5C;of%20the%5C;protfolio%7D%7BStandard%5C;deviation%5C;of%5C;exces%5C;return%7D)
+![alt text](https://latex.codecogs.com/svg.image?information%5C;ratio=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7B%5Csigma%20_%7Be%7D%7D)
+
+where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D) and, ![alt text](https://latex.codecogs.com/svg.image?%5Csigma_%7Be%7D) represent the portfolio return, risk-free return and, standard deviation of the excess return (![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D-r_%7Bf%7D)).
 
 ### 10. Standard deviation of returns
 
