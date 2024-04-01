@@ -94,7 +94,9 @@ The Treynor Ratio calculates a portfolio's excess returns as a percentage of its
 
 The formula can be calculated as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?Sortino%5C;ratio=%5Cfrac%7BPortfolio%5C;return-Risk%5C;free%5C;return%7D%7B%5Cbeta%7D)
+![alt text](https://latex.codecogs.com/svg.image?Treynor%5C;ratio=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7B%5Cbeta%7D)
+
+where ![alt text](https://latex.codecogs.com/svg.image?r_%7Bp%7D), ![alt text](https://latex.codecogs.com/svg.image?r_%7Bf%7D) and, ![alt text](https://latex.codecogs.com/svg.image?%5Cbeta%20) represent the portfolio return, risk-free return and, the portfolio beta
 
 ### 7. Sortino ratio
 
