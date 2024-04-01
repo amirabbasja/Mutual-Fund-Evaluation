@@ -285,7 +285,7 @@ Similar to the adjusted Sharpe ratio, the modified Sharpe ratio uses modified Va
 
 The formula is calculated below:
 
-![alt text](https://latex.codecogs.com/svg.image?Modified%5C;Sharpe%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BMVaR%7D)
+![alt text](https://latex.codecogs.com/svg.image?Modified%5C;Sharpe%5C;ratio=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7BMVaR%7D)
 
 Where MVaR is the modified value at risk.
 
@@ -326,7 +326,7 @@ Where F equals the cumulative distribution function of returns and MAR is the mi
 
 ### 27. d ratio
 
-The d ratio  is similar to the Bernado Ledoit ratio but inverted and taking into account the frequency of positive and negative returns(Lavinio, 1999). 
+The d ratio  is similar to the Bernado Ledoit ratio but inverted and taking into account the frequency of positive and negative returns (Lavinio, 1999).
 
 The formula is calculated below:
 
@@ -350,7 +350,7 @@ Where N is the entry size. The interpretation of the Kappa 3 ratio is that the h
 
 ### 29. Sterling ratio
 
-A modified version of sterling ratio is implemented in the current work. The original formulation acquired by Deanne Sterling Jones, measures the return over the average drawdown, as opposed to the more commonly used maximum drawdown. The ratio is calculated by dividing the compounded return by the absolute value of the average annual drawdown minus 10%. The resulting value is then multiplied by -1 to obtain a positive ratio. The 10% adjustment in the denominator was originally proposed at a time when T-bills were yielding 10%, and any investment with a ratio greater than 1.0 was considered to have a better risk/reward tradeoff(McCafferty, 2003).
+A modified version of sterling ratio is implemented in the current work. The original formulation acquired by Deanne Sterling Jones, measures the return over the average drawdown, as opposed to the more commonly used maximum drawdown. The ratio is calculated by dividing the compounded return by the absolute value of the average annual drawdown minus 10%. The resulting value is then multiplied by -1 to obtain a positive ratio. The 10% adjustment in the denominator was originally proposed at a time when T-bills were yielding 10%, and any investment with a ratio greater than 1.0 was considered to have a better risk/reward tradeoff (McCafferty, 2003).
 
 The original formulation is stated below:
 
@@ -358,7 +358,7 @@ The original formulation is stated below:
 
 Also, Bacon (2012) developed an alternate Sterling ratio by adopting Sharpe ratio:
 
-![alt text](https://latex.codecogs.com/svg.image?%20Updated%5C;sterling%5C;ratio=%5Cfrac%7BR_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D)
+![alt text](https://latex.codecogs.com/svg.image?%20Updated%5C;sterling%5C;ratio=%5Cfrac%7Br_%7Bp%7D%7D%7B%5Cleft%7C%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bj=1%7D%5E%7BN%7DD_%7Bj%7D%5Cright%7C%7D)
 
 Where N is the amount of maximum largest drawdown periods to consider in the evaluation. A higher Sterling ratio indicates a more attractive risk-adjusted performance, with a value greater than 1 suggesting a better reward for the risk taken each year. However, differences in specific magnitude are challenging to interpret, so the ratio is primarily used for relative ranking of investments
 
@@ -366,19 +366,21 @@ Where N is the amount of maximum largest drawdown periods to consider in the eva
 
 Perhaps the most common variation of the Sterling ratio uses the average annual maximum drawdown in the denominator over 3 years. A combination of both Sterling and Calmar concepts. The formulation goes as follows:
 
-![alt text](https://latex.codecogs.com/svg.image?Sterling-Calmar%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7BDrawdown_%7BMax%7D%7D)
+![alt text](https://latex.codecogs.com/svg.image?Sterling-Calmar%5C;ratio=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7BDrawdown_%7BMax%7D%7D)
 
 ### 31. Burke ratio
 
-It was first proposed by Burke in 1994. The ratio is calculated by taking the difference between the portfolio return and the risk-free rate, and then dividing it by the square root of the average of the squared drawdowns.The drawdown is a measure of the decline from a historical peak in an investment's value. 
+The ratio is calculated by taking the difference between the portfolio return and the risk-free rate, and then dividing it by the square root of the average of the squared drawdowns.The drawdown is a measure of the decline from a historical peak in an investment's value (Burke, 1994).
 
-![alt text](https://latex.codecogs.com/svg.image?Burke%5C;ratio=%5Cfrac%7BR_%7Bp%7D-R_%7Bf%7D%7D%7B%5Csqrt%7B%5Csum%20D_%7Bj%7D%5E%7B2%7D%7D%7D)
+![alt text](https://latex.codecogs.com/svg.image?Burke%5C;ratio=%5Cfrac%7Br_%7Bp%7D-r_%7Bf%7D%7D%7B%5Csqrt%7B%5Csum%20D_%7Bj%7D%5E%7B2%7D%7D%7D)
 
-The interpretation of the Burke ratio is similar to other risk-adjusted measures: a higher value indicates a more attractive risk-adjusted performance. Specifically, a Burke ratio greater than 1 suggests a better reward for the risk taken each year. However, like other ratios, the specific magnitude of the ratio is challenging to interpret in isolation, so it is primarily used for the relative ranking of investments.
+Where D is the drawdown in the desired period. The interpretation of the Burke ratio is similar to other risk-adjusted measures: a higher value indicates a more attractive risk-adjusted performance. Specifically, a Burke ratio greater than 1 suggests a better reward for the risk taken each year. However, like other ratios, the specific magnitude of the ratio is challenging to interpret in isolation, so it is primarily used for the relative ranking of investments.
 
 ### 32. Ulcer index
 
-The ulcer index developed by Peter G. Martin in 1987 (Martin and McCann, 1987) (so called because of the worry suffered by both the portfolio manager and investor) is similar to drawdown deviation with the exception that the impact of the duration of drawdowns is incorporated by selecting the negative return for each period below the previous peak or high water mark. The impact of long, deep drawdowns will have a significant impact since the underperformance since the last peak is squared:
+The ulcer index developed by Peter G. Martin in 1987 (so called because of the worry suffered by both the portfolio manager and investor) is similar to drawdown deviation with the exception that the impact of the duration of drawdowns is incorporated by selecting the negative return for each period below the previous peak or high water mark (Martin and McCann, 1987). The impact of long, deep drawdowns will have a significant impact since the under performance since the last peak is squared.
+
+The calculation is denoted below:
 
 ![alt text](https://latex.codecogs.com/svg.image?Ulcer%5C;index=%5Csqrt%7B%5Csum_%7Bi=1%7D%5E%7Bi=n%7D%5Cfrac%7BD%5E%7B'2%7D_%7Bi%7D%7D%7Bn%7D%7D)
 
@@ -386,7 +388,8 @@ The Ulcer Index calculates the amount as well as the time period for a percentag
 
 ### 33. Adjusted Sharpe ratio
 
- The Adjusted Sharpe Ratio (Pezier and White, 2006) is a risk-adjusted performance measure that extends the traditional Sharpe ratio by explicitly adjusting for skewness and kurtosis in the return distribution. Skewness measures the asymmetry of the return distribution, while kurtosis measures the thickness of the tails of the distribution. The ASR incorporates a penalty factor for negative skewness and excess kurtosis, providing a more comprehensive assessment of risk-adjusted performance.
+ The Adjusted Sharpe Ratio  is a risk-adjusted performance measure that extends the traditional Sharpe ratio by explicitly adjusting for skewness and kurtosis in the return distribution. Skewness measures the asymmetry of the return distribution, while kurtosis measures the thickness of the tails of the distribution. The ASR incorporates a penalty factor for negative skewness and excess kurtosis, providing a more comprehensive assessment of risk-adjusted performance (Pezier and White, 2006).
+
 The formula for the Adjusted Sharpe Ratio is:
 
 ![alt text](https://latex.codecogs.com/svg.image?Adjusted%5C;Sharpe%5C;ratio=SR%5B1&plus;(%5Cfrac%7BS%7D%7B6%7DSR-(%5Cfrac%7BK-3%7D%7B24%7DSR%5E%7B2%7D))%5D)
@@ -408,28 +411,33 @@ Watanabe (2014) notes that people have a tendency to feel loss greater than gain
 Where tau indicate the minimum acceptable return and denumerator is the standard deviation of drawdowns.
 
 --------
---------
-Metrics used in this repository:
-A. Retrun Based:
-    1&2. market-timing and security selectivity ability (Treynor and Mazuy (TM; 1966) abd Merton and Henriksson (MH; 1981) model)
 
-    The Treynor and Mazuy (TM) model and the Merton and Henriksson (MH) model are used to assess the market timing and security selection abilities of fund managers
-    Treynor and Mazuy (TM; 1966) model:
+Metrics used in this repository:
+Retrun Based:
+1&2. market-timing and security selectivity ability (Treynor and Mazuy (TM; 1966) abd Merton and Henriksson (MH; 1981) model)
+
+The Treynor and Mazuy (TM) model and the Merton and Henriksson (MH) model are used to assess the market timing and security selection abilities of fund managers
+Treynor and Mazuy (TM; 1966) model:
+
 ![alt text](https://latex.codecogs.com/svg.image?R%7B_%7Bi,t%7D%7D-R%7B_%7Bf,t%7D%7D=%5Calpha_%7Bi%7D%5E%7BTM%7D&plus;%5Cbeta_%7Bi%7D%5E%7BTM%7D(R%7B_%7Bm,t%7D%7D-R%7B_%7Bf,t%7D%7D)&plus;%5Cgamma_%7Bi%7D%5E%7BTM%7D(R%7B_%7Bm,t%7D%7D-R%7B_%7Bf,t%7D%7D)%7B%5E%7B2%7D%7D&plus;%5Cepsilon_%7Bi,t%7D%5E%7BTM%7D)
 
-The TM model measures selectivity performance with ![alt text](https://latex.codecogs.com/svg.image?%5Calpha_%7Bi%7D%5E%7BTM%7D) and timing performance with ![alt text](https://latex.codecogs.com/svg.image?%5Cgamma_%7Bi%7D%5E%7BTM%7D). 
+The TM model measures selectivity performance with ![alt text](https://latex.codecogs.com/svg.image?%5Calpha_%7Bi%7D%5E%7BTM%7D) and timing performance with ![alt text](https://latex.codecogs.com/svg.image?%5Cgamma_%7Bi%7D%5E%7BTM%7D).
 
-    and the Merton and Henriksson (MH; 1981) model:
+and the Merton and Henriksson (MH; 1981) model:
+
 ![alt text](https://latex.codecogs.com/svg.image?%20R%7B_%7Bit%7D%7D-R%7B_%7Bft%7D%7D=%5Calpha_%7Bi%7D%5E%7BMH%7D&plus;%5Cbeta_%7Bi%7D%5E%7BMH%7D(R%7B_%7Bmt%7D%7D-R%7B_%7Bft%7D%7D)&plus;%5Cgamma_%7Bi%7D%5E%7BMH%7D(R%7B_%7Bmt%7D%7D-R%7B_%7Bft%7D%7D)%7B%5E&plus;%7D&plus;%5Cepsilon_%7Bi%7D%5E%7BMH%7D)
-    where:
+
+where:
+
 ![alt text](https://latex.codecogs.com/svg.image?(R%7B_%7Bmt%7D%7D-R%7B_%7Bft%7D%7D)%7B%5E&plus;%7D=(max(0,R%7B_%7Bmt%7D%7D-R%7B_%7Bft%7D%7D))%7B%5E2%7D)
-    The MH model measures security selection performance ![alt text](https://latex.codecogs.com/svg.image?%5Calpha_%7Bi%7D%5E%7BMH%7D) and timing performance with ![alt text](https://latex.codecogs.com/svg.image?%5Cgamma_%7Bi%7D%5E%7BMH%7D). 
 
-    The TM model assumes that a manager is a “proportional timer”, meaning that he forecasts excess return of market, then adjusts his portfolio beta to be proportional to his forecast of excess return of market.
+The MH model measures security selection performance ![alt text](https://latex.codecogs.com/svg.image?%5Calpha_%7Bi%7D%5E%7BMH%7D) and timing performance with ![alt text](https://latex.codecogs.com/svg.image?%5Cgamma_%7Bi%7D%5E%7BMH%7D). 
 
-    In the both models signficantly positive gamma indicates that the manager's investment strategy possesses the superior market timing ability and positive alpha indicates that the manager's investment strategy possesses the superior security selection ability.
+The TM model assumes that a manager is a “proportional timer”, meaning that he forecasts excess return of market, then adjusts his portfolio beta to be proportional to his forecast of excess return of market.
 
-    2.
+In the both models signficantly positive gamma indicates that the manager's investment strategy possesses the superior market timing ability and positive alpha indicates that the manager's investment strategy possesses the superior security selection ability.
+
+2.
 
 B. Portfolio Based:
     1.	Value at Risk
